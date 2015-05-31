@@ -70,8 +70,8 @@ CREATE TABLE IF NOT EXISTS `#__ddc_tasks` (
   PRIMARY KEY (`ddc_task_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
 
-CREATE TABLE IF NOT EXISTS `#__ddc_taskdetails` (
-  `ddc_taskdetail_id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE IF NOT EXISTS `#__ddc_task_details` (
+  `ddc_task_detail_id` int(11) NOT NULL AUTO_INCREMENT,
   `action_detail` text NULL,
   `timestart` int(11) NOT NULL default '0',
   `timeend` int(11) NOT NULL default '0', 
@@ -81,7 +81,7 @@ CREATE TABLE IF NOT EXISTS `#__ddc_taskdetails` (
   `created` DATETIME NOT NULL default '0000-00-00 00:00:00',
   `modified_by` int(11) NOT NULL,
   `modified` DATETIME NOT NULL default '0000-00-00 00:00:00',
-  PRIMARY KEY (`ddc_taskdetail_id`)
+  PRIMARY KEY (`ddc_task_detail_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
 
 CREATE TABLE IF NOT EXISTS `#__ddc_invoice_headers` (
