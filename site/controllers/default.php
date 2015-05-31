@@ -14,7 +14,7 @@ class DevcloudmanagerControllersDefault extends JControllerBase
     // Get the document object.
     $document     = JFactory::getDocument();
  
-    $viewName     = $app->input->getWord('view', 'Dashboard');
+    $viewName     = $app->input->getWord('view', 'dashboard');
     $viewFormat   = $document->getType();
     $layoutName   = $app->input->getWord('layout', 'default');
  
