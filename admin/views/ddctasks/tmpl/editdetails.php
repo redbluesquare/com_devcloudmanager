@@ -17,6 +17,7 @@ error_reporting(E_ALL);
                 <div class="adminformlist">
 					<div class="span9">
 						<?php foreach($this->form->getFieldset('left_top') as $field): ?>
+							<div class="span3">
 							<?php if ($field->hidden):// If the field is hidden, just display the input.?>
 								<?php echo $field->input;?>
 							<?php else:?>
@@ -32,6 +33,7 @@ error_reporting(E_ALL);
 									</div>
 								</div>
 								<?php endif;?>
+							</div>
 							<?php endforeach; ?>
 						</div>
 						<div class="span3">
@@ -56,7 +58,7 @@ error_reporting(E_ALL);
 					</div>
         	</fieldset>
         <div>
-                <input type="hidden" name="task" value="ddcclient.edit" />
+                <input type="hidden" name="task" value="ddctask.edit" />
                 <?php echo JHtml::_('form.token'); ?>
         </div>
 	</form>

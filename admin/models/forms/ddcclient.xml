@@ -22,7 +22,6 @@
 			label="COM_DDC_ALIAS"
 			description="COM_DDC_ALIAS_DESC"
 			class="span10"
-			readonly="true"
 		/>
 		<field
 			name="catid"
@@ -65,7 +64,7 @@
 			description="COM_DDC_COUNTY_DESC"
 		/>
 		<field
-			name="post_code"
+			name="postcode"
 			type="text"
 			label="COM_DDC_POSTCODE"
 			description="COM_DDC_POSTCODE_DESC"
@@ -96,7 +95,7 @@
 			description="COM_DDCBOOKIT_RESIDENCE_TABLE_DESC"
 			hidden="true"
 			class="hidden"
-			default="residences"
+			default="ddcclient"
 		/>
 	</fieldset>
 </form>

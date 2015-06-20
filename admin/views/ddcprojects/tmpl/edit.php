@@ -56,7 +56,7 @@ error_reporting(E_ALL);
 					</div>
         	</fieldset>
         <div>
-                <input type="hidden" name="task" value="ddcclient.edit" />
+                <input type="hidden" name="task" value="ddcproject.edit" />
                 <?php echo JHtml::_('form.token'); ?>
         </div>
 	</form>

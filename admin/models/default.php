@@ -44,29 +44,13 @@ class DevcloudmanagerModelsDefault extends JModelBase
   	{
   		return false;
   	}
-  	if($this->data['table']=='residences'){
-  		if($this->data['alias']==null){
-  			$row->alias = JFilterOutput::stringURLSafe($this->data['residence_name']);
-			JFolder::create(JPATH_SITE.'/images/apartments/'.JFilterOutput::stringURLSafe($this->data['residence_name']));
-  		}
+  	if(isset($this->data['alias'])):
+  	if($this->data['alias']==null){
+  		$row->alias = JFilterOutput::stringURLSafe($this->data['title']);
+		JFolder::create(JPATH_SITE.'/images/apartments/'.JFilterOutput::stringURLSafe($this->data['title']));
   	}
-  	if($this->data['table']=='bookings'){
-  		$row->checkin = JHtml::date($this->data['checkin'],'Y-m-d');
-  		$row->checkout = JHtml::date($this->data['checkout'],'Y-m-d');
-  	}
-  	if($this->data['table']=='featuredaps'){
-  		$row->startdate = JHtml::date($this->data['startdate'],'Y-m-d');
-  		$row->enddate = JHtml::date($this->data['enddate'],'Y-m-d');
-  	}
-  	if($this->data['table']=='prices'){
-  		$row->startdate = JHtml::date($this->data['startdate'],'Y-m-d');
-  		$row->enddate = JHtml::date($this->data['enddate'],'Y-m-d');
-  	}
-  	if($this->data['table']=='poi'){
-  		if($this->data['alias']==null){
-  			$row->alias = JFilterOutput::stringURLSafe($this->data['title']);
-  		}
-  	}
+  	endif;
+
   	$row->modified = $date;
   	if ( !$row->created )
   	{

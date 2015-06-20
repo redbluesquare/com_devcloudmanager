@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form>
+	<fieldset name="left_top">
+		<field
+			name="ddc_project_id"
+			type="text"
+			label="COM_DDC_ID"
+			description="COM_DDC_ID_DESC"
+			readonly="true"
+		/>
+		<field
+			name="title"
+			type="text"
+			label="COM_DDC_TITLE"
+			description="COM_DDC_TITLE_DESC"
+			required="yes"
+			class="span10"
+		/>
+		<field
+			name="alias"
+			type="text"
+			label="COM_DDC_ALIAS"
+			description="COM_DDC_ALIAS_DESC"
+			class="span10"
+		/>
+		<field
+			name="description"
+			type="editor"
+			filter="rawhtml"
+			label="COM_DDC_DESCRIPTION"
+			description="COM_DDC_DESCRIPTION_DESC"
+		/>
+	</fieldset>
+	<fieldset name="right_top">
+		<field
+			name="client_id"
+			type="sql"
+			default="0"
+			label="COM_DDC_CLIENT"
+			description="COM_DDC_CLIENT_DESC"
+			query="SELECT ddc_client_id AS value, business_name as client_id FROM #__ddc_clients WHERE state = '1'"
+		/>
+		<field
+			name="catid"
+			type="sql"
+			default="0"
+			label="COM_DDC_CATEGORY"
+			description="COM_DDC_CATEGORY_DESC"
+			query="SELECT id AS value, title as catid FROM #__categories WHERE extension = 'com_devcloudmanager'"
+		/>
+		<field
+			name="pl_startdate"
+			type="calendar"
+			label="COM_DDC_PLANNED_START_DATE"
+			description="COM_DDC_PLANNED_START_DATE_DESC"
+		/>
+		<field
+			name="pl_enddate"
+			type="calendar"
+			label="COM_DDC_PLANNED_END_DATE"
+			description="COM_DDC_PLANNED_END_DATE_DESC"
+		/>
+		<field
+			name="act_startdate"
+			type="calendar"
+			label="COM_DDC_ACTUAL_START_DATE"
+			description="COM_DDC_ACTUAL_START_DATE_DESC"
+		/>
+		<field
+			name="act_enddate"
+			type="calendar"
+			label="COM_DDC_ACTUAL_END_DATE"
+			description="COM_DDC_ACTUAL_END_DATE_DESC"
+		/>
+		<field
+			name="user_id"
+			type="sql"
+			default="0"
+			label="COM_DDC_PROJECT_MANAGER"
+			description="COM_DDC_PROJECT_MANAGER_DESC"
+			query="SELECT id AS value, name as user_id FROM #__users"
+		/>
+		<field
+			name="project_approver"
+			type="sql"
+			default="0"
+			label="COM_DDC_SPONSOR"
+			description="COM_DDC_SPONSOR_DESC"
+			query="SELECT id AS value, name as project_approver FROM #__users"
+		/>
+		<field name="state" type="list" label="JSTATUS"
+			description="JFIELD_PUBLISHED_DESC" class="chzn-color-state"
+			filter="intval" size="1" default="1"
+		>
+			<option value="1">
+				JPUBLISHED</option>
+			<option value="0">
+				JUNPUBLISHED</option>
+			<option value="2">
+				JARCHIVED</option>
+			<option value="-2">
+				JTRASHED</option>
+		</field>
+		<field
+			name="table"
+			type="text"
+			label="COM_DDC_TABLE_LABEL"
+			description="COM_DDC_TABLE_DESC"
+			hidden="true"
+			class="hidden"
+			default="ddcproject"
+		/>
+	</fieldset>
+</form>

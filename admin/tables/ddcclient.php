@@ -1,6 +1,6 @@
 <?php defined( '_JEXEC' ) or die( 'Restricted access' ); 
  
-class TableDdcclients extends JTable
+class TableDdcclient extends JTable
 {                      
   /**
   * Constructor

@@ -1,6 +1,6 @@
 <?php defined( '_JEXEC' ) or die( 'Restricted access' ); 
  
-class DevcloudmanagerViewsDdcclientsHtml extends JViewHtml
+class DevcloudmanagerViewsDdcprojectsHtml extends JViewHtml
 {
 	protected $data;
 	protected $form;
@@ -10,22 +10,22 @@ class DevcloudmanagerViewsDdcclientsHtml extends JViewHtml
   function render()
   {
     $layout = $this->getLayout();
-    $modelClients = new DevcloudmanagerModelsDdcclients();
-    $modelClientForm = new DevcloudmanagerModelsDdcclient();
+    $modelProjects = new DevcloudmanagerModelsDdcprojects();
+    $modelProjectForm = new DevcloudmanagerModelsDdcproject();
  
     switch($layout) {
 
      	case "default":
      		default:
-     		$this->items = $modelClients->listItems();
+     		$this->items = $modelProjects->listItems();
 			$this->addToolbar();
-			DevcloudmanagerHelpersDevcloudmanager::addSubmenu('clients');
+			DevcloudmanagerHelpersDevcloudmanager::addSubmenu('projects');
     	break;
     	
     	case "edit":
     	default:
-    		$this->form = $modelClientForm->getForm();
-    		$this->item = $modelClients->getItem();
+    		$this->form = $modelProjectForm->getForm();
+    		$this->item = $modelProjects->getItem();
     		$this->updateToolbar();
     	break;
     }
@@ -41,8 +41,8 @@ class DevcloudmanagerViewsDdcclientsHtml extends JViewHtml
   	// Get the toolbar object instance
   	$bar = JToolBar::getInstance('toolbar');
   
-  	JToolBarHelper::title(JText::_('COM_DDC_CLIENTS'));
-  	JToolBarHelper::addNew('ddcclient.add');
+  	JToolBarHelper::title(JText::_('COM_DDC_PROJECTS'));
+  	JToolBarHelper::addNew('ddcproject.add');
   	
   	JToolBarHelper::help('JHELP_DEVCLOUDMANAGER',true,'http://redbluesquare.co.uk/custom-joomla-components/24-devcloudmanager.html');
   
@@ -56,16 +56,16 @@ class DevcloudmanagerViewsDdcclientsHtml extends JViewHtml
   	$input = JFactory::getApplication()->input;
   	$input->set('hidemainmenu', true);
   	$app = JFactory::getApplication();
-  	if($app->input->get('client_id') == null)
+  	if($app->input->get('project_id') == null)
   	{
   		$isNew = true;
   	}else 
   	{
   		$isNew = false;
   	}
-  	JToolBarHelper::title($isNew ? JText::_('COM_DDC_MANAGER_CLIENT_NEW'): JText::_('COM_DDC_MANAGER_CLIENT_EDIT'));
-  	JToolBarHelper::apply('ddcclient.apply');
-  	JToolBarHelper::save('ddcclient.save');
-  	JToolBarHelper::cancel('ddcclient.cancel', $isNew ? 'JTOOLBAR_CANCEL': 'JTOOLBAR_CLOSE');
+  	JToolBarHelper::title($isNew ? JText::_('COM_DDC_MANAGER_PROJECT_NEW'): JText::_('COM_DDC_MANAGER_PROJECT_EDIT'));
+  	JToolBarHelper::apply('ddcproject.apply');
+  	JToolBarHelper::save('ddcproject.save');
+  	JToolBarHelper::cancel('ddcproject.cancel', $isNew ? 'JTOOLBAR_CANCEL': 'JTOOLBAR_CLOSE');
   }
 }

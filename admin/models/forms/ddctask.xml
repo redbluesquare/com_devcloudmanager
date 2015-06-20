@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form>
+	<fieldset name="left_top">
+		<field
+			name="ddc_task_id"
+			type="text"
+			label="COM_DDC_ID"
+			description="COM_DDC_ID_DESC"
+			readonly="true"
+		/>
+		<field
+			name="title"
+			type="text"
+			label="COM_DDC_TITLE"
+			description="COM_DDC_TITLE_DESC"
+			required="yes"
+			class="span10"
+		/>
+		<field
+			name="alias"
+			type="text"
+			label="COM_DDC_ALIAS"
+			description="COM_DDC_ALIAS_DESC"
+			class="span10"
+		/>
+		<field
+			name="description"
+			type="editor"
+			filter="rawhtml"
+			label="COM_DDC_DESCRIPTION"
+			description="COM_DDC_DESCRIPTION_DESC"
+		/>
+	</fieldset>
+	<fieldset name="right_top">
+		<field
+			name="project_id"
+			type="sql"
+			default="0"
+			label="COM_DDC_PROJECT"
+			description="COM_DDC_PROJECT_DESC"
+			query="SELECT ddc_project_id AS value, title as project_id FROM #__ddc_projects WHERE state = '1'"
+		/>
+		<field
+			name="time_estimate"
+			type="number"
+			default="30"
+			max="6000"
+            min="0"
+            step="15"
+			label="COM_DDC_TIME_ESTIMATE"
+			description="COM_DDC_TIME_ESTIMATE_DESC"
+		/>
+		<field
+			name="due_date"
+			type="calendar"
+			format="%Y-%m-%d"
+			label="COM_DDC_TIME_ESTIMATE"
+			description="COM_DDC_TIME_ESTIMATE_DESC"
+		/>
+		<field
+			name="priority"
+			type="number"
+			default="100"
+			label="COM_DDC_PRIORITY"
+			description="COM_DDC_PRIORITY_DESC"
+		/>
+		<field
+			name="user_id"
+			type="sql"
+			default="0"
+			label="COM_DDC_USER_RESPONSIBLE"
+			description="COM_DDC_USER_RESPONSIBLE_FOR_TASK_DESC"
+			query="SELECT id AS value, name as user_id FROM #__users"
+		/>
+		<field name="state" type="list" label="JSTATUS"
+			description="JFIELD_PUBLISHED_DESC" class="chzn-color-state"
+			filter="intval" size="1" default="0"
+		>
+			<option value="1">
+				COM_DDC_IN_PROGRESS</option>
+			<option value="0">
+				COM_DDC_OPEN</option>
+			<option value="2">
+				COM_DDC_COMPLETE</option>
+			<option value="-2">
+				COM_DDC_TRASHED</option>
+		</field>
+		<field
+			name="table"
+			type="text"
+			label="COM_DDC_TABLE_LABEL"
+			description="COM_DDC_TABLE_DESC"
+			hidden="true"
+			class="hidden"
+			default="ddctask"
+		/>
+	</fieldset>
+</form>

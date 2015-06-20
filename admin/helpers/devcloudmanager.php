@@ -51,7 +51,7 @@ class DevcloudmanagerHelpersDevcloudmanager
 		JSubMenuHelper::addEntry(JText::_('COM_DDC_CATEGORIES'),
 		'index.php?option=com_categories&view=categories&extension=com_devcloudmanager', $submenu == 'categories');
 		JSubMenuHelper::addEntry(JText::_('COM_DDC_TASKS'),
-		'index.php?option=com_devcloudmanager&view=ddctasks', $submenu == 'tasks');
+		'index.php?option=com_devcloudmanager&view=ddctasks&task=ddctaskdetail.add', $submenu == 'ddctasks');
 		JSubMenuHelper::addEntry(JText::_('COM_DDC_INVOICES'),
 		'index.php?option=com_devcloudmanager&view=ddcinvoices', $submenu == 'invoices');
 

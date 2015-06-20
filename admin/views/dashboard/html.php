@@ -31,7 +31,7 @@ class DevcloudmanagerViewsDashboardHtml extends JViewHtml
   	// Get the toolbar object instance
   	$bar = JToolBar::getInstance('toolbar');
   
-  	JToolBarHelper::title(JText::_('COM_DEVCLOUDMANAGER_DASHBOARD'));
+  	JToolBarHelper::title(JText::_('COM_DDC_DASHBOARD'));
   	JToolBarHelper::help('JHELP_DEVCLOUDMANAGER',true,'http://redbluesquare.co.uk/custom-joomla-components/24-apartment-manager.html');
   
   	if ($canDo->get('core.admin'))

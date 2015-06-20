@@ -1,13 +1,13 @@
 <?php defined( '_JEXEC' ) or die( 'Restricted access' ); 
  
-class TableDdctasks extends JTable
+class TableDdctask extends JTable
 {                      
   /**
   * Constructor
   *
   * @param object Database connector object
   */
-	var $ddc_task_id 			= null;
+	var $id 			= null;
 	
 	function __construct( &$db )
 	{

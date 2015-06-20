@@ -17,7 +17,7 @@ CREATE TABLE IF NOT EXISTS `#__ddc_clients` (
   `state` tinyint(3) NOT NULL,
   PRIMARY KEY (`ddc_client_id`),
   KEY `catid` (`catid`),
-  KEY `state` (`status`)
+  KEY `state` (`state`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
 
 CREATE TABLE IF NOT EXISTS `#__ddc_clientusers` (
@@ -62,8 +62,7 @@ CREATE TABLE IF NOT EXISTS `#__ddc_tasks` (
   `alias` varchar(255) NOT NULL,
   `description` text NULL,
   `user_id` int(11) NOT NULL,
-  `time_estimate` int(11) NULL,
-  `user_id` int(11) NOT NULL,
+  `time_estimate` double NULL,
   `project_id` int(11) NOT NULL,
   `created` DATETIME NOT NULL default '0000-00-00 00:00:00',
   `modified_by` int(11) NOT NULL,
@@ -79,7 +78,7 @@ CREATE TABLE IF NOT EXISTS `#__ddc_task_details` (
   `timeend` int(11) NOT NULL default '0', 
   `action_date` DATETIME NOT NULL default '0000-00-00 00:00:00',
   `user_id` int(11) NOT NULL default '0',
-  `task_id` int(11) NOT NULL,
+  `ddctask_id` int(11) NOT NULL,
   `created` DATETIME NOT NULL default '0000-00-00 00:00:00',
   `modified_by` int(11) NOT NULL,
   `modified` DATETIME NOT NULL default '0000-00-00 00:00:00',

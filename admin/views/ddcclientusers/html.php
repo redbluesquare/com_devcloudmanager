@@ -1,6 +1,6 @@
 <?php defined( '_JEXEC' ) or die( 'Restricted access' ); 
  
-class DevcloudmanagerViewsDdcclientsHtml extends JViewHtml
+class DevcloudmanagerViewsDdcclientusersHtml extends JViewHtml
 {
 	protected $data;
 	protected $form;
@@ -10,22 +10,22 @@ class DevcloudmanagerViewsDdcclientsHtml extends JViewHtml
   function render()
   {
     $layout = $this->getLayout();
-    $modelClients = new DevcloudmanagerModelsDdcclients();
-    $modelClientForm = new DevcloudmanagerModelsDdcclient();
+    $modelClientusers = new DevcloudmanagerModelsDdcclientusers();
+    $modelClientuserForm = new DevcloudmanagerModelsDdcclientuser();
  
     switch($layout) {
 
      	case "default":
      		default:
-     		$this->items = $modelClients->listItems();
+     		$this->items = $modelClientusers->listItems();
 			$this->addToolbar();
 			DevcloudmanagerHelpersDevcloudmanager::addSubmenu('clients');
     	break;
     	
     	case "edit":
     	default:
-    		$this->form = $modelClientForm->getForm();
-    		$this->item = $modelClients->getItem();
+    		$this->form = $modelClientuserForm->getForm();
+    		$this->item = $modelClientusers->getItem();
     		$this->updateToolbar();
     	break;
     }
@@ -42,7 +42,7 @@ class DevcloudmanagerViewsDdcclientsHtml extends JViewHtml
   	$bar = JToolBar::getInstance('toolbar');
   
   	JToolBarHelper::title(JText::_('COM_DDC_CLIENTS'));
-  	JToolBarHelper::addNew('ddcclient.add');
+  	JToolBarHelper::addNew('ddcclientuser.add');
   	
   	JToolBarHelper::help('JHELP_DEVCLOUDMANAGER',true,'http://redbluesquare.co.uk/custom-joomla-components/24-devcloudmanager.html');
   
@@ -64,8 +64,8 @@ class DevcloudmanagerViewsDdcclientsHtml extends JViewHtml
   		$isNew = false;
   	}
   	JToolBarHelper::title($isNew ? JText::_('COM_DDC_MANAGER_CLIENT_NEW'): JText::_('COM_DDC_MANAGER_CLIENT_EDIT'));
-  	JToolBarHelper::apply('ddcclient.apply');
-  	JToolBarHelper::save('ddcclient.save');
-  	JToolBarHelper::cancel('ddcclient.cancel', $isNew ? 'JTOOLBAR_CANCEL': 'JTOOLBAR_CLOSE');
+  	JToolBarHelper::apply('ddcclientuser.apply');
+  	JToolBarHelper::save('ddcclientuser.save');
+  	JToolBarHelper::cancel('ddcclientuser.cancel', $isNew ? 'JTOOLBAR_CANCEL': 'JTOOLBAR_CLOSE');
   }
 }
