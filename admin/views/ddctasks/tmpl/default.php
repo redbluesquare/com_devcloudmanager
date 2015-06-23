@@ -71,7 +71,7 @@ JHtml::_('behavior.tooltip');
                 	        <?php echo $item->priority; ?>
                 		</td>
                 		<td>
-        					<a href="<?php echo JRoute::_('index.php?option=com_devcloudmanager&view=ddctasks&layout=editdetails&ddctask_id='.$item->ddc_task_id); ?>"><?php echo $status; ?></a>
+        					<?php echo $status; ?>
         				</td>
         			</tr>
         			<?php 

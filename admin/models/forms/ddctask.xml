@@ -54,8 +54,8 @@
 			name="due_date"
 			type="calendar"
 			format="%Y-%m-%d"
-			label="COM_DDC_TIME_ESTIMATE"
-			description="COM_DDC_TIME_ESTIMATE_DESC"
+			label="COM_DDC_DUE_DATE"
+			description="COM_DDC_DUE_DATE_DESC"
 		/>
 		<field
 			name="priority"

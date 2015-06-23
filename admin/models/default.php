@@ -44,12 +44,9 @@ class DevcloudmanagerModelsDefault extends JModelBase
   	{
   		return false;
   	}
-  	if(isset($this->data['alias'])):
   	if($this->data['alias']==null){
   		$row->alias = JFilterOutput::stringURLSafe($this->data['title']);
-		JFolder::create(JPATH_SITE.'/images/apartments/'.JFilterOutput::stringURLSafe($this->data['title']));
   	}
-  	endif;
 
   	$row->modified = $date;
   	if ( !$row->created )

@@ -63,6 +63,7 @@ class DevcloudmanagerModelsDdctask extends JModelForm
 		{
 			$jinput = JFactory::getApplication()->input;
 			$task = $jinput->get('task', "", 'STR' );
+			$this->data = $jinput->get('jform', array(),'array');
 			if($task != 'ddctask.add')
 			{
 				$taskModel = new DevcloudmanagerModelsDdctasks();

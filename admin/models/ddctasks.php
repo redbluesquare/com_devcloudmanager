@@ -1,4 +1,4 @@
-<?php // no direct access
+x	<?php // no direct access
 
 defined( '_JEXEC' ) or die( 'Restricted access' ); 
  

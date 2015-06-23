@@ -33,12 +33,6 @@ class DevcloudmanagerViewsDdctasksHtml extends JViewHtml
     		$this->item = $modelTasks->getItem();
     		$this->updateToolbar();
     	break;
-    	case "editdetails":
-    		$this->form = $modelTaskdetailForm->getForm();
-    		$this->item = $modelTasks->getItem();
-    		$this->items = $modelTaskdetails->listItems();
-    		$this->updateToolbar();
-    		break;
     }
    
  
@@ -75,7 +69,7 @@ class DevcloudmanagerViewsDdctasksHtml extends JViewHtml
   		$isNew = false;
   	}
   	JToolBarHelper::title($isNew ? JText::_('COM_DDC_MANAGER_TASK_NEW'): JText::_('COM_DDC_MANAGER_TASK_EDIT'));
-  	JToolBarHelper::apply('ddctask.apply');
+  	//JToolBarHelper::apply('ddctask.apply');
   	JToolBarHelper::save('ddctask.save');
   	JToolBarHelper::cancel('ddctask.cancel', $isNew ? 'JTOOLBAR_CANCEL': 'JTOOLBAR_CLOSE');
   }

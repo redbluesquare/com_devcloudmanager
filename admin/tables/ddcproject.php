@@ -7,7 +7,7 @@ class TableDdcproject extends JTable
   *
   * @param object Database connector object
   */
-	var $ddc_project_id 			= null;
+	var $id 			= null;
 	
 	function __construct( &$db )
 	{

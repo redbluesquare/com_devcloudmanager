@@ -14,18 +14,19 @@ Class DevcloudmanagerControllersEdit extends DevcloudmanagerControllersDefault
 	
 		$app = JFactory::getApplication ();
 		$return = array ("success" => false	);
-		$jinput = JFactory::getApplication()->input;
-		$this->data = $jinput->get('jform', array(),'array');
+		$this->data = $app->input->get('jform', array(),'array');
 	
 	
 		if(isset($this->data['table']))
 		{
-			$task = $jinput->get('task', "", 'STR' );
+			$task = $app->input->get('task', "", 'STR' );
 			if($task==$this->data['table'].'.add')
 			{
 				$viewName = $app->input->getWord('view', $this->data['table'].'s');
 				$app->input->set('layout','edit');
 				$app->input->set('view', $viewName);
+				//display view
+				return parent::execute();
 				 
 			}
 			if($task==$this->data['table'].".save")
@@ -54,7 +55,7 @@ Class DevcloudmanagerControllersEdit extends DevcloudmanagerControllersDefault
 				}
 				if ($this->data['table'] != 'ddctaskdetail')
 				{
-					if($row = $model->store)
+					if($row = $model->store() )
 					{
 						$return['success'] = true;
 						$viewName = $app->input->getWord('view', $this->data['table'].'s');
@@ -90,7 +91,7 @@ Class DevcloudmanagerControllersEdit extends DevcloudmanagerControllersDefault
 				$viewName = $app->input->getWord('view', $this->data['table'].'s');
 				$app->input->set('layout','edit');
 				$app->input->set('view', $viewName);
-				$app->input->set('item',$row->id);
+				//$app->input->set('item',$row->id);
 				
 				//display view
 				return parent::execute();
