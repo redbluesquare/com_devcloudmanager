@@ -33,6 +33,7 @@ class DevcloudmanagerModelsDefault extends JModelBase
   }
   public function store($data=null)
   {
+  	$session = JFactory::getSession();
   	$jinput = JFactory::getApplication()->input;
 	$this->data = $jinput->get('jform', array(),'array');
   	$row = JTable::getInstance($this->data['table'],'Table');
@@ -44,9 +45,21 @@ class DevcloudmanagerModelsDefault extends JModelBase
   	{
   		return false;
   	}
-  	if($this->data['alias']==null){
-  		$row->alias = JFilterOutput::stringURLSafe($this->data['title']);
-  	}
+  	if($this->data['table']!='ddctaskdetail'):
+  		if($this->data['table']!='ddcclientuser'):
+  			if($this->data['table']!='ddcinvoice'):
+  				if($this->data['alias']==null){
+  					$row->alias = JFilterOutput::stringURLSafe($this->data['title']);
+  				}
+  			endif;
+  			if($this->data['table']=='ddcinvoice'):
+  				if($this->data['token']==null)
+  				{
+  					$row->token = $session->getToken(true);
+  				}
+  			endif;
+  		endif;
+  	endif;
 
   	$row->modified = $date;
   	if ( !$row->created )
@@ -76,9 +89,10 @@ class DevcloudmanagerModelsDefault extends JModelBase
   	$this->data = $jinput->get('jform', array(),'array');
   	$row = JTable::getInstance($this->data['table'],'Table');
   	
-  	if($this->data['table'] == "prices")
+  	if($jinput->get('delinvdentry',false) != false)
   	{
-  		$id = $this->data['ddcbookit_apartment_price_id'];
+  		$row = JTable::getInstance('ddcinvoicedetails','Table');
+  		$id = $this->data['ddc_invoice_detail_id'];
   	}
   	if($this->data['table'] == "bookings")
   	{

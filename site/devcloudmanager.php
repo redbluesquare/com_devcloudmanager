@@ -1,6 +1,9 @@
 <?php
 defined( '_JEXEC' ) or die( 'Restricted access' );
 
+//load composer classes
+require JPATH_LIBRARIES.'/vendor/autoload.php';
+
 //sessions
 jimport( 'joomla.session.session' );
 
@@ -11,10 +14,10 @@ JTable::addIncludePath(JPATH_COMPONENT.'/tables');
 JLoader::registerPrefix('Devcloudmanager', JPATH_COMPONENT);
 
 //Load plugins
-//JPluginHelper::importPlugin('ddcbookit');
+//JPluginHelper::importPlugin('Devcloudmanager');
 
 //Load styles and javascripts
-DevcloudmanagerHelpersStyle::load();
+//DevcloudmanagerHelpersStyle::load();
 
 //application
 $app = JFactory::getApplication();

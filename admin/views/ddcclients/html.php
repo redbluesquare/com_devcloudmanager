@@ -12,6 +12,7 @@ class DevcloudmanagerViewsDdcclientsHtml extends JViewHtml
     $layout = $this->getLayout();
     $modelClients = new DevcloudmanagerModelsDdcclients();
     $modelClientForm = new DevcloudmanagerModelsDdcclient();
+    DevcloudmanagerHelpersDevcloudmanager::addSubmenu('clients');
  
     switch($layout) {
 
@@ -19,7 +20,7 @@ class DevcloudmanagerViewsDdcclientsHtml extends JViewHtml
      		default:
      		$this->items = $modelClients->listItems();
 			$this->addToolbar();
-			DevcloudmanagerHelpersDevcloudmanager::addSubmenu('clients');
+			$this->sidebar = JHtmlSidebar::render();
     	break;
     	
     	case "edit":
@@ -50,6 +51,7 @@ class DevcloudmanagerViewsDdcclientsHtml extends JViewHtml
   	{
   		JToolbarHelper::preferences('com_devcloudmanager');
   	}
+  	JHtmlSidebar::setAction('index.php?option=com_devcloudmanager');
   }
   protected function UpdateToolBar()
   {

@@ -5,7 +5,15 @@ defined('_JEXEC') or die('Restricted Access');
 JHtml::_('behavior.tooltip');
 ?>
 <form action="<?php echo JRoute::_('index.php?option=com_devcloudmanager&controller=edit'); ?>" method="post" name="adminForm" id="adminForm">
-        <table class="adminlist">
+<?php if (!empty( $this->sidebar)) : ?>
+	<div id="j-sidebar-container" class="span2">
+		<?php echo $this->sidebar; ?>
+	</div>
+	<div id="j-main-container" class="span10">
+<?php else : ?>
+	<div id="j-main-container">
+<?php endif;?>
+		<table class="adminlist table table-striped">
                 <thead>
                 	<tr>
         				<th width="5%"><?php echo JText::_('COM_DDC_ID'); ?></th>
@@ -59,7 +67,7 @@ JHtml::_('behavior.tooltip');
                 	        <?php echo number_format($item->time_estimate/60,2)." ".JText::_('COM_DDC_HRS'); ?>
                 		</td>
                 		<td style="text-align: center;">
-                	        <a href="#addTaskdetailModal" data-toggle="modal">
+                	        <a href="<?php echo JRoute::_('index.php?option=com_devcloudmanager&view=ddctasks&layout=edittaskdetail&ddctask_id='.$item->ddc_task_id.'&task=ddctaskdetail.add'); ?>">
                 	        	<?php echo number_format($item->worked,2)." ".JText::_('COM_DDC_HRS'); ?>
                 	        </a>
                 	        	
@@ -74,10 +82,7 @@ JHtml::_('behavior.tooltip');
         					<?php echo $status; ?>
         				</td>
         			</tr>
-        			<?php 
-        			$this->_addtaskdetailView->item = $item;
-
-        			?>
+ 	
 				<?php endforeach; ?>
                 </tbody>
         </table>
@@ -87,13 +92,5 @@ JHtml::_('behavior.tooltip');
                 <input type="hidden" name="boxchecked" value="0" />
                 <?php echo JHtml::_('form.token'); ?>
         </div>
+	</div>
 </form>
-
-<?php 
-$this->_addtaskdetailView->task_detail_items = $this->task_detail_items;
-$this->_addtaskdetailView->form = $this->form;
-$this->_addtaskdetailView->_taskdetailListView = $this->_taskdetailListView;
-echo $this->_addtaskdetailView->render(); 
-
-
-?>

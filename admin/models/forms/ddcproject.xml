@@ -86,7 +86,7 @@
 			default="0"
 			label="COM_DDC_SPONSOR"
 			description="COM_DDC_SPONSOR_DESC"
-			query="SELECT id AS value, name as project_approver FROM #__users"
+			query="SELECT id AS value, name as project_approver FROM #__contact_details"
 		/>
 		<field name="state" type="list" label="JSTATUS"
 			description="JFIELD_PUBLISHED_DESC" class="chzn-color-state"

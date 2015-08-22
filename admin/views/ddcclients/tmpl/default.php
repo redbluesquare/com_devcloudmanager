@@ -5,7 +5,15 @@ defined('_JEXEC') or die('Restricted Access');
 JHtml::_('behavior.tooltip');
 ?>
 <form action="<?php echo JRoute::_('index.php?option=com_devcloudmanager&controller=edit'); ?>" method="post" name="adminForm" id="adminForm">
-        <table class="adminlist">
+<?php if (!empty( $this->sidebar)) : ?>
+	<div id="j-sidebar-container" class="span2">
+		<?php echo $this->sidebar; ?>
+	</div>
+	<div id="j-main-container" class="span10">
+<?php else : ?>
+	<div id="j-main-container">
+<?php endif;?>
+        <table class="adminlist table table-striped">
                 <thead>
                 	<tr>
                 		<th width="5%"><?php echo JText::_('COM_DDC_STATUS'); ?></th>
@@ -30,7 +38,7 @@ JHtml::_('behavior.tooltip');
                 	        <a href="<?php echo JRoute::_('index.php?option=com_devcloudmanager&view=ddcclients&layout=edit&client_id='.$item->ddc_client_id); ?>"><?php echo $item->business_name; ?></a>
                 		</td>
                 		<td style="text-align: center;">
-                	        <?php //echo $item->num_apartments; ?>
+                	        <?php echo $item->no_of_projects; ?>
                 		</td>
         			</tr>
 				<?php endforeach; ?>
@@ -42,4 +50,5 @@ JHtml::_('behavior.tooltip');
                 <input type="hidden" name="boxchecked" value="0" />
                 <?php echo JHtml::_('form.token'); ?>
         </div>
+     </div>
 </form>

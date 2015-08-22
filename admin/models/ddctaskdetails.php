@@ -58,5 +58,25 @@ class DevcloudmanagerModelsDdctaskdetails extends DevcloudmanagerModelsDefault
   	}
    return $query;
   }
+  
+  /**
+   * Method to delete an entry from the task detail table
+   * @param TaskDetailId $id
+   * @return mixed
+   */
+  public function deleteTaskd($id)
+  {
+  	$this->db = JFactory::getDbo();
+  	$query = $this->db->getQuery(true);
+  	// delete the relevant id.
+  	$conditions = array($this->db->quoteName('ddc_task_detail_id') . ' = '.$id);
+  	$query->delete($this->db->quoteName('#__ddc_task_details'));
+  	$query->where($conditions);
+  	$this->db->setQuery($query);
+  
+  
+  	$result = $this->db->execute();
+  	return $result;
+  }
 
 }

@@ -1,118 +1,174 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <config>
-    <fieldset name="apartment"
-		label="COM_DDCBOOKIT_APARTMENT_STD_OPTIONS"
-		description="COM_DDCBOOKIT_APARTMENT_STD_OPTIONS_DESC">
-		<field name="google_api_key"
-		    type="text"
-		    label="COM_DDCBOOKIT_GAK"
-		    description="COM_DDCBOOKIT_GAK_DESC"
-		/>
+	<fieldset name="basic_options"
+		label="COM_DDC_BASIC_OPTIONS"
+		description="COM_DDC_BASIC_OPTIONS_DESC">
 		<field name="required_account" type="radio"
 			default="0"
 			class="btn-group"
-			label="COM_DDCBOOKIT_REQUIRED_ACCOUNT"
-			description="COM_DDCBOOKIT_REQUIRED_ACCOUNT_DESC">
+			label="COM_DDC_REQUIRED_ACCOUNT"
+			description="COM_DDC_REQUIRED_ACCOUNT_DESC">
 
 			<option value="0">JNO</option>
 			<option value="1">JYES</option>
 		</field>
+		<field name="ddc_currency" type="list"
+			default="GBP"
+			class="btn-group"
+			label="COM_DDC_CURRENCY"
+			description="COM_DDC_CURRENCY_DESC">
+
+			<option value="GBP">COM_DDC_GBP_BRITISH_POUND</option>
+			<option value="EUR">COM_DDC_EUR_EURO</option>
+		</field>
 		<field name="url_terms"
 		    type="url"
 			default=""
-			label="COM_DDCBOOKIT_URL_TERMS"
-			description="COM_DDCBOOKIT_URL_TERMS_DESC"
+			label="COM_DDC_URL_TERMS"
+			description="COM_DDC_URL_TERMS_DESC"
 		/>
     </fieldset>
-	<fieldset name="book_confirmed_options"
-		label="COM_DDCBOOKIT_BOOK_CONFIRMED_OPTIONS"
-		description="COM_DDCBOOKIT_BOOKING_OPTIONS_DESC"
+	<fieldset name="business_settings"
+		label="COM_DDC_BUSINESS_SETTINGS"
+		description="COM_DDC_BUSINESS_SETTINGS_DESC"
 	>
-		<field name="book_confirmed"
+		<field name="website_logo"
+		    type="url"
+			default="http://www.redbluesquare.co.uk/images/headers/logo.png"
+			label="COM_DDC_WEBSITE_LOGO"
+			description="COM_DDC_WEBSITE_LOGO_DESC"
+		/>
+		<field name="address1"
 		    type="text"
 			default=""
-			label="COM_DDCBOOKIT_BOOK_CONFIRMED"
-			description="COM_DDCBOOKIT_BOOK_CONFIRMED_DESC"
+			label="COM_DDC_ADDRESS1"
+			description="COM_DDC_ADDRESS1_DESC"
 		/>
-		<field name="book_summary_confirmed"
-		    type="editor"
-			cols="5"
-			rows="5"
-			class="span6"
-			label="COM_DDCBOOKIT_BOOK_SUMMARY"
-			description="COM_DDCBOOKIT_BOOK_SUMMARY_DESC">
-		</field>
-		<field name="terms_details_confirmed"
-		    type="editor"
-			cols="20"
-			rows="5"
-			label="COM_DDCBOOKIT_TERMS_DETAILS"
-			description="COM_DDCBOOKIT_TERMS_DETAILS_DESC"
-		>
-		</field>
-		
-	</fieldset>
-	<fieldset name="book_request_options"
-		label="COM_DDCBOOKIT_BOOK_REQUEST_OPTIONS"
-		description="COM_DDCBOOKIT_BOOKING_OPTIONS_DESC"
-	>
-		<field name="request_booking"
+		<field name="address2"
 		    type="text"
 			default=""
-			label="COM_DDCBOOKIT_BOOKING_REQUEST"
-			description="COM_DDCBOOKIT_BOOKING_REQUEST_DESC"
+			label="COM_DDC_ADDRESS2"
+			description="COM_DDC_ADDRESS2_DESC"
 		/>
-		<field name="book_summary_request"
-		    type="editor"
-			cols="5"
+		<field name="address3"
+		    type="text"
+			default=""
+			label="COM_DDC_ADDRESS3"
+			description="COM_DDC_ADDRESS3_DESC"
+		/>
+		<field name="address4"
+		    type="text"
+			default=""
+			label="COM_DDC_ADDRESS4"
+			description="COM_DDC_ADDRESS4_DESC"
+		/>
+		<field name="post_code"
+		    type="text"
+			default=""
+			label="COM_DDC_POST_CODE"
+			description="COM_DDC_POST_CODE_DESC"
+		/>
+		<field name="telephone"
+		    type="text"
+			default=""
+			label="COM_DDC_TELEPHONE"
+			description="COM_DDC_TELEPHONE_DESC"
+		/>
+		<field name="twitter_name"
+		    type="text"
+			default=""
+			label="COM_DDC_TWITTER_NAME"
+			description="COM_DDC_TWITTER_NAME_DESC"
+		/>
+		<field name="twitterurl"
+		    type="url"
+			default=""
+			label="COM_DDC_TWITTER_URL"
+			description="COM_DDC_TWITTER_URL_DESC"
+		/>
+	</fieldset>
+	<fieldset name="bank_details"
+		label="COM_DDC_BANK_DETAILS"
+		description="COM_DDC_BANK_DETAILS_DESC">
+		<field name="bank_account_name"
+		    type="text"
+		    label="COM_DDC_ACCOUNT_NAME"
+		    description="COM_DDC_ACCOUNT_NAME_DESC"
+		/>
+		<field name="bank_name"
+		    type="text"
+		    label="COM_DDC_BANK_NAME"
+		    description="COM_DDC_BANK_NAME_DESC"
+		/>
+		<field name="bank_account_number"
+		    type="text"
+		    label="COM_DDC_ACCOUNT_NUMBER"
+		    description="COM_DDC_ACCOUNT_NUMBER_DESC"
+		/>
+		<field name="bank_sort_code"
+		    type="text"
+		    label="COM_DDC_SORT_CODE"
+		    description="COM_DDC_SORT_CODE_DESC"
+		/>
+		<field name="payment_terms"
+		    type="textarea"
+			cols="10"
 			rows="5"
 			class="span6"
-			label="COM_DDCBOOKIT_BOOK_SUMMARY"
-			description="COM_DDCBOOKIT_BOOK_SUMMARY_DESC">
+			label="COM_DDC_PAYMENT_TERMS"
+			description="COM_DDC_PAYMENT_TERMS_DESC">
 		</field>
-		<field name="terms_details_request"
-		    type="editor"
-			cols="20"
-			rows="5"
-			label="COM_DDCBOOKIT_TERMS_DETAILS"
-			description="COM_DDCBOOKIT_TERMS_DETAILS_DESC"
-		>
+		<field name="paypal_clientid"
+		    type="text"
+		    label="COM_DDC_PAYPAL_CLIENT_ID"
+		    description="COM_DDC_PAYPAL_CLIENT_ID_DESC"
+		/>
+		<field name="paypal_client_secret"
+		    type="text"
+		    label="COM_DDC_PAYPAL_CLIENT_SECRET"
+		    description="COM_DDC_PAYPAL_CLIENT_SECRET_DESC"
+		/>
+		<field name="paypal_mode" type="radio"
+			default="sandbox"
+			class="btn-group"
+			label="COM_DDC_PAYPAL_MODE"
+			description="COM_DDC_PAYPAL_MODE_DESC">
+
+			<option value="sandbox">COM_DDC_SANDBOX</option>
+			<option value="live">COM_DDC_LIVE</option>
 		</field>
+		<field name="paypalurl"
+		    type="url"
+			default="https://api.sandbox.paypal.com"
+			label="COM_DDC_PAYPAL_URL"
+			description="COM_DDC_PAYPAL_URL_DESC"
+		/>
+		<field name="paypal_logo"
+		    type="url"
+			default=""
+			label="COM_DDC_PAYPAL_LOGO"
+			description="COM_DDC_PAYPAL_LOGO_DESC"
+		/>
+		<field name="paypal_success_url"
+		    type="url"
+			default=""
+			label="COM_DDC_PAYPAL_SUCCESS_URL"
+			description="COM_DDC_PAYPAL_URL_DESC"
+		/>
+		<field name="paypal_cancel_url"
+		    type="url"
+			default=""
+			label="COM_DDC_PAYPAL_CANCEL_URL"
+			description="COM_DDC_PAYPAL_URL_DESC"
+		/>
 	</fieldset>
-	<fieldset name="email"
-		label="COM_DDCBOOKIT_EMAIL_BOOKING_OPTIONS"
-		description="COM_DDCBOOKIT_EMAIL_BOOKING_OPTIONS_DESC"
-	>
-		<field name="email_header"
-		    type="text"
-		    label="COM_DDCBOOKIT_EMAIL_HEADER"
-		    description="COM_DDCBOOKIT_EMAIL_HEADER_DESC"
-		/>
-		<field name="email_header_conf"
-		    type="text"
-		    label="COM_DDCBOOKIT_EMAIL_HEADER_CONF"
-		    description="COM_DDCBOOKIT_EMAIL_HEADER_DESC"
-		/>
-		<field name="book_reference"
-		    type="text"
-		    label="COM_DDCBOOKIT_BOOK_REF"
-		    description="COM_DDCBOOKIT_BOOK_REF_DESC"
-		/>
-		<field name="second_email"
-		    type="email"
-		    label="COM_DDCBOOKIT_SEC_EMAIL"
-		    description="COM_DDCBOOKIT_BOOK_SEC_EMAIL"
-		/>
-		
-	</fieldset>
-	
 	<fieldset name="permissions"
 		description="JCONFIG_PERMISSIONS_DESC"
 		label="JCONFIG_PERMISSIONS_LABEL"
 	>
 
 		<field name="rules" type="rules"
-			component="com_ddcbookit"
+			component="com_devcloudmanager"
 			filter="rules"
 			validate="rules"
 			label="JCONFIG_PERMISSIONS_LABEL"

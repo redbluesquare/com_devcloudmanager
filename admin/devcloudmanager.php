@@ -1,9 +1,8 @@
 <?php // No direct access
 
 defined( '_JEXEC' ) or die( 'Restricted access' );
+require JPATH_LIBRARIES.'/vendor/autoload.php';
 
-ini_set('display_errors',1);
-error_reporting(E_ALL);
 
 //sessions
 jimport( 'joomla.session.session' );
@@ -15,7 +14,7 @@ JTable::addIncludePath(JPATH_COMPONENT_ADMINISTRATOR.'/tables');
 JLoader::registerPrefix('Devcloudmanager', JPATH_COMPONENT_ADMINISTRATOR);
 
 //Load plugins
-//JPluginHelper::importPlugin('devcloudmanager');
+JPluginHelper::importPlugin('devcloudmanager');
  
 //application
 $app = JFactory::getApplication();

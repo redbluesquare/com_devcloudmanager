@@ -1,4 +1,4 @@
-x	<?php // no direct access
+<?php // no direct access
 
 defined( '_JEXEC' ) or die( 'Restricted access' ); 
  
@@ -12,7 +12,8 @@ class DevcloudmanagerModelsDdctasks extends DevcloudmanagerModelsDefault
   var $_query			= null;
   var $_cat_id		    = null;
   var $_pagination  	= null;
-  var $_published   	= 1;
+  var $_project_id  	= null;
+  var $_published   	= 0;
   protected $messages;	
   
   function __construct()
@@ -21,6 +22,7 @@ class DevcloudmanagerModelsDdctasks extends DevcloudmanagerModelsDefault
 	$this->_ddctask_id = $app->input->get('ddctask_id', null);
 	$this->_query = $app->input->get('query', null);
 	$this->_cat_id = $app->input->get('id', null);
+	$this->_project_id = $app->input->get('project_id', null);
   	  	
     parent::__construct();       
   }
@@ -41,6 +43,11 @@ class DevcloudmanagerModelsDdctasks extends DevcloudmanagerModelsDefault
     $query->select('u.name as responsible,u.email as responsible_email');
     $query->leftJoin('#__users as u on t.user_id = u.id');
     $query->group('t.title ASC');
+    if($this->_project_id==null)
+    {
+    	$query->where('p.state = "1"');
+    }
+    
     
     return $query;
     
@@ -51,6 +58,14 @@ class DevcloudmanagerModelsDdctasks extends DevcloudmanagerModelsDefault
   	if($this->_ddctask_id!=null)
   	{
   		$query->where('t.ddc_task_id = "'.$this->_ddctask_id.'"');
+  	}
+  	if($this->_published!=null)
+  	{
+  		$query->where('t.state = "'.$this->_published.'"');
+  	}
+  	if($this->_project_id!=null)
+  	{
+  		$query->where('p.ddc_project_id = "'.$this->_project_id.'"');
   	}
 
    return $query;

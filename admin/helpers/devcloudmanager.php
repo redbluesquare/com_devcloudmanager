@@ -20,39 +20,43 @@ class DevcloudmanagerHelpersDevcloudmanager
 	/**
 	 * @return  JObject
 	 */
-	public static function getActions()
-	{
-		$user	= JFactory::getUser();
-		$result	= new JObject;
+ 	public static function getActions()
+ 	{
+ 		$user	= JFactory::getUser();
+ 		$result	= new JObject;
 
-		$assetName = 'com_devcloudmanager';
-		$level = 'component';
+ 		$assetName = 'com_devcloudmanager';
+ 		$level = 'component';
 
-		$actions = JAccess::getActions('com_devcloudmanager', $level);
+ 		$actions = JAccess::getActions('com_devcloudmanager', $level);
 
-		foreach ($actions as $action)
-		{
-			$result->set($action->name,	$user->authorise($action->name, $assetName));
-		}
+ 		foreach ($actions as $action)
+ 		{
+ 			$result->set($action->name,	$user->authorise($action->name, $assetName));
+ 		}
 
-		return $result;
-	}
+ 		return $result;
+ 	}
 	
 	public static function addSubmenu($submenu)
 	{
-		JSubMenuHelper::addEntry(JText::_('COM_DDC_DASHBOARD'),
+		JHtmlSidebar::addEntry(JText::_('COM_DDC_DASHBOARD'),
 		'index.php?option=com_devcloudmanager&view=dashboard', $submenu == 'dashboard');
-		JSubMenuHelper::addEntry(JText::_('COM_DDC_CLIENTS'),
+		JHtmlSidebar::addEntry(JText::_('COM_DDC_CLIENTS'),
 		'index.php?option=com_devcloudmanager&view=ddcclients', $submenu == 'clients');
-		JSubMenuHelper::addEntry(JText::_('COM_DDC_CLIENTUSERS'),
+		JHtmlSidebar::addEntry(JText::_('COM_DDC_CLIENTUSERS'),
 		'index.php?option=com_devcloudmanager&view=ddcclientusers', $submenu == 'clientusers');
-		JSubMenuHelper::addEntry(JText::_('COM_DDC_PROJECTS'),
+		JHtmlSidebar::addEntry(JText::_('COM_DDC_PROJECTS'),
 		'index.php?option=com_devcloudmanager&view=ddcprojects', $submenu == 'projects');
-		JSubMenuHelper::addEntry(JText::_('COM_DDC_CATEGORIES'),
-		'index.php?option=com_categories&view=categories&extension=com_devcloudmanager', $submenu == 'categories');
-		JSubMenuHelper::addEntry(JText::_('COM_DDC_TASKS'),
-		'index.php?option=com_devcloudmanager&view=ddctasks&task=ddctaskdetail.add', $submenu == 'ddctasks');
-		JSubMenuHelper::addEntry(JText::_('COM_DDC_INVOICES'),
+		JHtmlSidebar::addEntry(JText::_('COM_DDC_CATEGORIES'),
+		'index.php?option=com_categories&extension=com_devcloudmanager', $submenu == 'categories');
+		JHtmlSidebar::addEntry(JText::_('COM_DDC_TASKS'),
+		'index.php?option=com_devcloudmanager&view=ddctasks', $submenu == 'ddctasks');
+		JHtmlSidebar::addEntry(JText::_('COM_DDC_ITEMS'),
+		'index.php?option=com_devcloudmanager&view=ddcitems', $submenu == 'ddcitems');
+		JHtmlSidebar::addEntry(JText::_('COM_DDC_SERVICES'),
+		'index.php?option=com_devcloudmanager&view=ddcservices', $submenu == 'ddcservices');
+		JHtmlSidebar::addEntry(JText::_('COM_DDC_INVOICES'),
 		'index.php?option=com_devcloudmanager&view=ddcinvoices', $submenu == 'invoices');
 
 		// set some global property

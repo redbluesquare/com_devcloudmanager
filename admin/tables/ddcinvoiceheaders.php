@@ -7,7 +7,7 @@ class TableDdcinvoiceheaders extends JTable
   *
   * @param object Database connector object
   */
-	var $ddc_invoice_header_id 			= null;
+	var $id 			= null;
 	
 	function __construct( &$db )
 	{

@@ -14,18 +14,16 @@ class DevcloudmanagerViewsDdctasksHtml extends JViewHtml
     $modelTaskForm = new DevcloudmanagerModelsDdctask();
     $modelTaskdetails = new DevcloudmanagerModelsDdctaskdetails();
     $modelTaskdetailForm = new DevcloudmanagerModelsDdctaskdetail();
+    DevcloudmanagerHelpersDevcloudmanager::addSubmenu('ddctasks');
  
     switch($layout) {
 
      	case "default":
      		default:
      		$this->items = $modelTasks->listItems();
-     		$this->task_detail_items = $modelTaskdetails->listItems();
-			$this->form = $modelTaskdetailForm->getForm();
-			$this->_taskdetailListView = DevcloudmanagerHelpersView::load('Ddctasks','_entry','phtml');
-			$this->_addtaskdetailView = DevcloudmanagerHelpersView::load('Ddctasks','_addtaskdetail','phtml');
-			DevcloudmanagerHelpersDevcloudmanager::addSubmenu('ddctasks');
 			$this->addToolbar();
+			$this->sidebar = JHtmlSidebar::render();
+			
     	break;
     	
     	case "edit":
@@ -33,6 +31,14 @@ class DevcloudmanagerViewsDdctasksHtml extends JViewHtml
     		$this->item = $modelTasks->getItem();
     		$this->updateToolbar();
     	break;
+    	
+    	case "edittaskdetail":
+    	default:
+    		$this->item = $modelTasks->getItem();
+    		$this->items = $modelTaskdetails->listItems();
+    		$this->form = $modelTaskdetailForm->getForm();
+    		$this->updateTDToolbar();
+    		break;
     }
    
  
@@ -72,5 +78,22 @@ class DevcloudmanagerViewsDdctasksHtml extends JViewHtml
   	//JToolBarHelper::apply('ddctask.apply');
   	JToolBarHelper::save('ddctask.save');
   	JToolBarHelper::cancel('ddctask.cancel', $isNew ? 'JTOOLBAR_CANCEL': 'JTOOLBAR_CLOSE');
+  }
+  protected function UpdateTDToolBar()
+  {
+  	$input = JFactory::getApplication()->input;
+  	$input->set('hidemainmenu', true);
+  	$app = JFactory::getApplication();
+  	if($app->input->get('ddctaskdetail_id') == null)
+  	{
+  		$isNew = true;
+  	}else
+  	{
+  		$isNew = false;
+  	}
+  	JToolBarHelper::title($isNew ? JText::_('COM_DDC_MANAGER_TASK_DETAIL_NEW'): JText::_('COM_DDC_MANAGER_TASK_DETAIL_EDIT'));
+  	//JToolBarHelper::apply('ddctask.apply');
+  	JToolBarHelper::save('ddctaskdetail.save');
+  	JToolBarHelper::cancel('ddctaskdetail.cancel', $isNew ? 'JTOOLBAR_CANCEL': 'JTOOLBAR_CLOSE');
   }
 }

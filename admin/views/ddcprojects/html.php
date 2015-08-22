@@ -12,14 +12,16 @@ class DevcloudmanagerViewsDdcprojectsHtml extends JViewHtml
     $layout = $this->getLayout();
     $modelProjects = new DevcloudmanagerModelsDdcprojects();
     $modelProjectForm = new DevcloudmanagerModelsDdcproject();
+    DevcloudmanagerHelpersDevcloudmanager::addSubmenu('projects');
  
     switch($layout) {
 
      	case "default":
      		default:
-     		$this->items = $modelProjects->listItems();
+     		$this->items = $this->model->listItems();
 			$this->addToolbar();
-			DevcloudmanagerHelpersDevcloudmanager::addSubmenu('projects');
+			$this->sidebar = JHtmlSidebar::render();
+			
     	break;
     	
     	case "edit":

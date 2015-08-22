@@ -33,7 +33,9 @@ class DevcloudmanagerModelsDdcclients extends DevcloudmanagerModelsDefault
     $query = $db->getQuery(TRUE);
 
     $query->select('cl.*');
+    $query->select('(SELECT COUNT(p.ddc_project_id) FROM #__ddc_projects as p WHERE (p.client_id = cl.ddc_client_id) And (p.state = "1") ) as no_of_projects');
     $query->from('#__ddc_clients as cl');
+    //$query->rightJoin('#__ddc_projects as p on p.client_id = cl.ddc_client_id');
     $query->group('cl.business_name');
     
     return $query;

@@ -16,7 +16,6 @@ Class DevcloudmanagerControllersEdit extends DevcloudmanagerControllersDefault
 		$return = array ("success" => false	);
 		$this->data = $app->input->get('jform', array(),'array');
 	
-	
 		if(isset($this->data['table']))
 		{
 			$task = $app->input->get('task', "", 'STR' );
@@ -34,42 +33,34 @@ Class DevcloudmanagerControllersEdit extends DevcloudmanagerControllersDefault
 				$modelName  = $app->input->get('models', $this->data['table'].'s');
 				$modelName  = 'DevcloudmanagerModels'.ucwords($modelName);
 				$model = new $modelName();
-				if($this->data['table'] == 'ddctaskdetail')
+				if($row = $model->store() )
 				{
-					if( $row = $model->store() )
+					$return['success'] = true;
+					if($this->data['table'] == 'ddcinvoice'):
+						$invdmodel = new DevcloudmanagerModelsDdcinvoicedetails();
+						$invdmodel->storeDetails($row->ddc_invoice_header_id);
+						if($this->data['sendmail']==1):
+							$sent = $this->_sendEmail($row->ddc_invoice_header_id);
+						endif;
+					endif;
+					if($this->data['table'] == 'ddctaskdetail')
 					{
-						$return['success'] = true;
-						$msg = JText::_('COM_DEVCLOUDMANAGER_SAVE_SUCCESS');
-						
-						$view = $app->input->get('view', 'ddctasks');
-						$layout = $app->input->get('layout','_entry');
-						$item = $app->input->get('item', 'tditem');
-					
-						$return['html'] = $row;
-					
-						
-					}else{
-						$return['msg'] = JText::_('COM_DEVCLOUDMANAGER_SAVE_FAILURE');
-					}
-					echo json_encode($return);
-				}
-				if ($this->data['table'] != 'ddctaskdetail')
-				{
-					if($row = $model->store() )
+						$viewName = $app->input->getWord('view', 'ddctasks');
+					}else 
 					{
-						$return['success'] = true;
 						$viewName = $app->input->getWord('view', $this->data['table'].'s');
-						$app->input->set('view', $viewName);
-						$app->input->set('layout','default');
-						//display view
-						return parent::execute();
-					
-					}else{
-						$return['msg'] = JText::_('COM_DEVCLOUDMANAGER_SAVE_FAILURE');
-						$app->input->set('layout','default');
-						//display view
-						return parent::execute();
 					}
+					
+					$app->input->set('view', $viewName);
+					$app->input->set('layout','default');
+					//display view
+					return parent::execute();
+				
+				}else{
+					$return['msg'] = JText::_('COM_DEVCLOUDMANAGER_SAVE_FAILURE');
+					$app->input->set('layout','default');
+					//display view
+					return parent::execute();
 				}
 				
 				
@@ -98,7 +89,14 @@ Class DevcloudmanagerControllersEdit extends DevcloudmanagerControllersDefault
 			}
 			if($task==$this->data['table'].".cancel")
 			{
-				$viewName = $app->input->getWord('view', $this->data['table'].'s');
+				if($this->data['table']=='ddctaskdetail')
+				{
+					$viewName = 'ddctasks';
+				}
+				else{
+					$viewName = $app->input->getWord('view', $this->data['table'].'s');
+				}
+				
 				$app->input->set('layout','default');
 				$app->input->set('view', $viewName);
 				//display view
@@ -114,6 +112,36 @@ Class DevcloudmanagerControllersEdit extends DevcloudmanagerControllersDefault
 			//display view
 			return parent::execute();
 		}
+	
+	}
+	
+	private function _sendEmail($id)
+	{
+		//save the new booking and send to customer
+		$model = new DevcloudmanagerModelsDdcinvoices();
+		$inv = $model->emailinvoice($id);
+		$params = JComponentHelper::getParams('com_devcloudmanager');
+	
+		$app = JFactory::getApplication();
+		$mailfrom	= $app->getCfg('mailfrom');
+		$fromname	= $app->getCfg('fromname');
+		$sitename	= $app->getCfg('sitename');
+
+		$body		= (string)$inv[0];
+		$name		= $inv[1];
+		$email		= $inv[2];
+		$subject	= (string)$inv[3];
+	
+		$mail = JFactory::getMailer();
+		$mail->addRecipient(array($email));
+		$mail->addReplyTo(array($mailfrom, $fromname));
+		$mail->setSender(array($mailfrom, $fromname));
+		$mail->setSubject($sitename.': '.$subject);
+		$mail->isHTML(true);
+		$mail->Encoding = 'base64';
+		$mail->setBody($body);
+		$sent = $mail->Send();
+		return $sent;
 	}
 	
 }

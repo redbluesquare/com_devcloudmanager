@@ -13,7 +13,7 @@ error_reporting(E_ALL);
 	<form action="<?php echo JRoute::_('index.php?option=com_devcloudmanager&controller=edit'); ?>"
       method="post" name="adminForm" id="adminForm">
         <fieldset class="adminform">
-             <legend><?php echo JText::_( 'COM_DDC_CLIENT_DETAILS' ); ?></legend>
+             <legend><?php echo JText::_( 'COM_DDC_TASK_DETAILS' ); ?></legend>
                 <div class="adminformlist">
 					<div class="span9">
 						<?php foreach($this->form->getFieldset('left_top') as $field): ?>

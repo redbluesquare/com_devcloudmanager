@@ -20,15 +20,15 @@ CREATE TABLE IF NOT EXISTS `#__ddc_clients` (
   KEY `state` (`state`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
 
-CREATE TABLE IF NOT EXISTS `#__ddc_clientusers` (
-  `ddc_clientuser_id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE IF NOT EXISTS `#__ddc_client_users` (
+  `ddc_client_user_id` int(11) NOT NULL AUTO_INCREMENT,
   `client_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
   `created_by` int(11) NOT NULL,
   `created` DATETIME NOT NULL default '0000-00-00 00:00:00',
   `modified_by` int(11) NOT NULL,
   `modified` DATETIME NOT NULL default '0000-00-00 00:00:00',
-  PRIMARY KEY (`ddc_clientuser_id`),
+  PRIMARY KEY (`ddc_client_user_id`),
   KEY `user_id` (`user_id`),
   KEY `client_id` (`client_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
@@ -99,6 +99,8 @@ CREATE TABLE IF NOT EXISTS `#__ddc_invoice_headers` (
   `modified_by` int(11) NOT NULL,
   `modified` DATETIME NOT NULL default '0000-00-00 00:00:00',
   `state` tinyint(3) NOT NULL,
+  `token` varchar(255) NOT NULL,
+  `hits` int(11) NOT NULL default '0',
   PRIMARY KEY (`ddc_invoice_header_id`),
   KEY `user_id` (`user_id`),
   KEY `client_id` (`client_id`)
@@ -106,9 +108,13 @@ CREATE TABLE IF NOT EXISTS `#__ddc_invoice_headers` (
 
 CREATE TABLE IF NOT EXISTS `#__ddc_invoice_details` (
   `ddc_invoice_detail_id` int(11) NOT NULL AUTO_INCREMENT,
-  `item` int(11) NOT NULL default '0',
-  `task` int(11) NOT NULL default '0',
+  `invoiceheader_id` int(11) NOT NULL default '0',
+  `pos` int(11) NOT NULL default '0',
+  `service_id` int(11) NOT NULL default '0',
+  `item_id` int(11) NOT NULL default '0',
+  `task_id` int(11) NOT NULL default '0',
   `quantity` int(11) NOT NULL default '0',
+  `discount` double NOT NULL default '0.00',
   `cost` double NOT NULL default '0.00',
   `user_id` int(11) NOT NULL default '0',
   `created` DATETIME NOT NULL default '0000-00-00 00:00:00',
@@ -132,4 +138,34 @@ CREATE TABLE IF NOT EXISTS `#__ddc_items` (
   `modified` DATETIME NOT NULL default '0000-00-00 00:00:00',
   `state` tinyint(3) NOT NULL,
   PRIMARY KEY (`ddc_item_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
+
+CREATE TABLE IF NOT EXISTS `#__ddc_services` (
+  `ddc_service_id` int(11) NOT NULL AUTO_INCREMENT,
+  `item_id` varchar(255) NOT NULL,
+  `title` varchar(255) NOT NULL,
+  `alias` varchar(255) NOT NULL,
+  `details` text NULL,
+  `client_id` int(11) NOT NULL default '0',
+  `start_date` DATETIME NOT NULL default '0000-00-00 00:00:00',
+  `expiry_date` DATETIME NOT NULL default '0000-00-00 00:00:00',
+  `created` DATETIME NOT NULL default '0000-00-00 00:00:00',
+  `modified_by` int(11) NOT NULL,
+  `modified` DATETIME NOT NULL default '0000-00-00 00:00:00',
+  `state` tinyint(3) NOT NULL,
+  PRIMARY KEY (`ddc_service_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
+
+CREATE TABLE IF NOT EXISTS `#__ddc_payments` (
+  `ddc_payment_id` int(11) NOT NULL AUTO_INCREMENT,
+  `ref` varchar(100) NOT NULL,
+  `ref_id` int(11) NOT NULL,
+  `token` TEXT NOT NULL,
+  `created` DATETIME NOT NULL default '0000-00-00 00:00:00',
+  `created_by` int(11) NOT NULL default '0',
+  `modified_by` int(11) NOT NULL default'0',
+  `modified` DATETIME NOT NULL default '0000-00-00 00:00:00',
+  `state` tinyint(3) NOT NULL,
+  PRIMARY KEY (`ddc_payment_id`),
+  KEY `ref_id` (`ref_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;

@@ -48,6 +48,10 @@ class DevcloudmanagerModelsDdcprojects extends DevcloudmanagerModelsDefault
   	{
   		$query->where('p.ddc_project_id = "'.$this->_project_id.'"');
   	}
+  	if($this->_published!=null)
+  	{
+  		$query->where('p.state = "'.$this->_published.'"');
+  	}
    return $query;
   }
 
