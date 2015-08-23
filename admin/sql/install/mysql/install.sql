@@ -1,6 +1,7 @@
 CREATE TABLE IF NOT EXISTS `#__ddc_clients` (
   `ddc_client_id` int(11) NOT NULL AUTO_INCREMENT,
   `business_name` varchar(255) NOT NULL,
+  `alias` varchar(255) NOT NULL,
   `address1` varchar(60) NOT NULL,
   `address2` varchar(60) NULL,
   `town` varchar(60) NULL,
@@ -24,6 +25,7 @@ CREATE TABLE IF NOT EXISTS `#__ddc_client_users` (
   `ddc_client_user_id` int(11) NOT NULL AUTO_INCREMENT,
   `client_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
+  `primary` int(3) NOT NULL default '0',
   `created_by` int(11) NOT NULL,
   `created` DATETIME NOT NULL default '0000-00-00 00:00:00',
   `modified_by` int(11) NOT NULL,
