@@ -134,6 +134,7 @@ Class DevcloudmanagerControllersEdit extends DevcloudmanagerControllersDefault
 	
 		$mail = JFactory::getMailer();
 		$mail->addRecipient(array($email));
+		$mail->addCC(array($mailfrom, $fromname));
 		$mail->addReplyTo(array($mailfrom, $fromname));
 		$mail->setSender(array($mailfrom, $fromname));
 		$mail->setSubject($sitename.': '.$subject);

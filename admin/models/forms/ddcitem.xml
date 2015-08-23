@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form>
+	<fieldset name="left_top">
+		<field
+			name="ddc_item_id"
+			type="text"
+			label="COM_DDC_ID"
+			description="COM_DDC_ID_DESC"
+			readonly="true"
+		/>
+		<field
+			name="item_code"
+			type="text"
+			label="COM_DDC_ITEM_CODE"
+			description="COM_DDC_ITEM_CODE_DESC"
+		/>
+		<field
+			name="title"
+			type="text"
+			label="COM_DDC_TITLE"
+			description="COM_DDC_TITLE_DESC"
+			required="yes"
+			class="span10"
+		/>
+		<field
+			name="alias"
+			type="text"
+			label="COM_DDC_ALIAS"
+			description="COM_DDC_ALIAS_DESC"
+			class="span10"
+		/>
+		<field
+			name="description"
+			type="editor"
+			filter="rawhtml"
+			label="COM_DDC_DESCRIPTION"
+			description="COM_DDC_DESCRIPTION_DESC"
+		/>
+	</fieldset>
+	<fieldset name="right_top">
+		<field
+			name="quantity"
+			type="number"
+			default="0"
+			label="COM_DDC_QUANTITY"
+			description="COM_DDC_QUANTITY_DESC"
+		/>
+		<field
+			name="cost"
+			type="text"
+			default=""
+			label="COM_DDC_COST"
+			description="COM_DDC_COST_DESC"
+		/>
+		<field
+			name="expiry_date"
+			type="calendar"
+			format="%Y-%m-%d"
+			label="COM_DDC_EXPIRY_DATE"
+			description="COM_DDC_EXPIRY_DATE_DESC"
+		/>
+		<field name="state" type="list" label="JSTATUS"
+			description="JFIELD_PUBLISHED_DESC" class="chzn-color-state"
+			filter="intval" size="1" default="0"
+		>
+			<option value="1">
+				COM_DDC_PUBLISHED</option>
+			<option value="0">
+				COM_DDC_UNPUBLISHED</option>
+			<option value="2">
+				COM_DDC_COMPLETE</option>
+			<option value="-2">
+				COM_DDC_TRASHED</option>
+		</field>
+		<field
+			name="table"
+			type="text"
+			label="COM_DDC_TABLE_LABEL"
+			description="COM_DDC_TABLE_DESC"
+			hidden="true"
+			class="hidden"
+			default="ddcitem"
+		/>
+	</fieldset>
+</form>

@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form>
+	<fieldset name="left_top">
+		<field
+			name="ddc_invoice_header_id"
+			type="text"
+			label="COM_DDC_ID"
+			description="COM_DDC_ID_DESC"
+			readonly="true"
+		/>
+		<field
+			name="reference"
+			type="text"
+			label="COM_DDC_REFERENCE"
+			description="COM_DDC_REFERENCE_DESC"
+			required="yes"
+		/>
+		<field
+			name="purchase_order"
+			type="text"
+			label="COM_DDC_CUSTOMER_PURCHASE_ORDER"
+			description="COM_DDC_CUSTOMER_PURCHASE_ORDER_DESC"
+		/>
+	</fieldset>
+	<fieldset name="right_top">
+		<field
+			name="client_id"
+			type="sql"
+			default="0"
+			label="COM_DDC_CLIENT"
+			description="COM_DDC_CLIENT_DESC"
+			query="SELECT ddc_client_id AS value, business_name as client_id FROM #__ddc_clients WHERE state = '1'"
+		/>
+		<field
+			name="posteddate"
+			type="calendar"
+			label="COM_DDC_POSTED_DATE"
+			description="COM_DDC_POSTED_DATE_DESC"
+			format="%Y-%m-%d"
+		/>
+		<field
+			name="closeddate"
+			type="calendar"
+			label="COM_DDC_CLOSED_DATE"
+			description="COM_DDC_CLOSED_DATE_DESC"
+			format="%Y-%m-%d"
+		/>
+		<field
+		    name="state"
+		    type="list"
+		    label="JSTATUS"
+			description="JFIELD_PUBLISHED_DESC"
+			class="chzn-color-state"
+			filter="intval"
+			size="1"
+			default="1"
+		>
+			<option value="1">
+				JPUBLISHED</option>
+			<option value="0">
+				JUNPUBLISHED</option>
+			<option value="2">
+				JARCHIVED</option>
+			<option value="-2">
+				JTRASHED</option>
+		</field>
+		<field
+		    name="sendmail"
+		    type="list"
+		    label="COM_DDC_SEND_MAIL"
+			description="COM_DDC_SEND_MAIL_DESC"
+			class="chzn-color-state"
+			filter="intval"
+			size="1"
+			default="0"
+		>
+			<option value="1">
+				COM_DDC_SEND_ON_SAVE</option>
+			<option value="0">
+				COM_DDC_DO_NOT_SEND_ON_SAVE</option>
+		</field>
+		<field
+			name="table"
+			type="text"
+			label="COM_DDC_INVOICE_TABLE_LABEL"
+			description="COM_DDC_INVOICE_TABLE_DESC"
+			hidden="true"
+			class="hidden"
+			default="ddcinvoice"
+		/>
+		<field
+			name="token"
+			type="text"
+			label="COM_DDC_TOKEN_LABEL"
+			description="COM_DDC_TOKEN_DESC"
+			hidden="true"
+			class="hidden"
+		/>
+	</fieldset>
+</form>

@@ -1,0 +1,165 @@
+<?php
+defined( '_JEXEC' ) or die( 'Restricted access' );
+$app = JFactory::getApplication();
+$params = JComponentHelper::getParams('com_devcloudmanager');
+$lines = 10;
+$position = array();
+$descriptions = array();
+$quantities = array();
+$costs = array();
+$total = array();
+$paymentDetails = array();
+$paymentDetails['token'] = $this->item->token;
+$paymentDetails['id'] = $this->item->ddc_invoice_header_id;
+$paymentDetails['shipping'] = 0.00;
+for($i=0;$i<count($this->invd);$i++)
+{
+	array_push($position,(int)$this->invd[$i]->pos);
+	if($this->invd[$i]->service_id!=0){
+		array_push($descriptions,(string)$this->invd[$i]->service_title);
+		$paymentDetails['details'][$i]['description'] = (string)$this->invd[$i]->service_title;
+	}elseif($this->invd[$i]->item_id!=0){
+		array_push($descriptions,(string)$this->invd[$i]->item_title);
+		$paymentDetails['details'][$i]['description'] = (string)$this->invd[$i]->item_title;
+	}
+	elseif($this->invd[$i]->task_id!=0){
+		array_push($descriptions,(string)$this->invd[$i]->task_title);
+		$paymentDetails['details'][$i]['description'] = (string)$this->invd[$i]->task_title;
+	}
+	array_push($quantities,(double)$this->invd[$i]->quantity);
+	$paymentDetails['details'][$i]['quantity'] = (string)$this->invd[$i]->quantity;
+	array_push($costs,(double)$this->invd[$i]->cost);
+	$paymentDetails['details'][$i]['cost'] = (string)$this->invd[$i]->cost;
+	array_push($total,(double)$this->invd[$i]->total);
+}
+for($i=0;$i<($lines-count($this->invd));$i++)
+{
+	array_push($position,null);
+	array_push($descriptions,"");
+	array_push($quantities,"");
+	array_push($costs,0);
+	array_push($total,0);
+}
+$paypal = new DevcloudmanagerModelsDdcinvoices();
+$paypal->ddcpaypal($paymentDetails);
+?>
+<div class="row-fluid" style="font-family: arial, \'Bree Serif\', serif;border:1px solid #ccc;padding:">
+<div class="span7" style="padding:10px;">
+<a href="<?php echo $params->get('twitterurl'); ?>" target="_BLANK">
+<img src="<?php echo $params->get('website_logo'); ?>" width="40px" class="pull-left"/>
+</a>
+<h1 style="display:inline;text-size:40px;line-height:40px;vertical-align:middle;">
+<a href="<?php echo $params->get('twitterurl'); ?>" target="_BLANK" style="text-decoration:none;"><?php echo $app->getCfg('sitename');?></a></h1>
+</div>
+<div class="span5" style="padding:10px;text-align:right">
+<h1 style="text-size:40px;line-height:40px;margin-top:5px;"><?php echo strtoupper(JText::_('COM_DDC_INVOICE')); ?></h1>
+<table style="width:100%;">
+	<tbody>
+		<tr>
+			<td><?php echo JText::_('COM_DDC_INVOICE_NUMBER'); ?>:</td>
+			<td style="text-align:right;"><strong><?php echo $this->item->ddc_invoice_header_id; ?></strong></td>
+		</tr>
+		<tr>
+			<td><?php echo JText::_('COM_DDC_INVOICE_DATE'); ?>:</td>
+			<td style="text-align:right;"><strong><?php echo JHtml::date($this->item->posteddate,'d M Y'); ?></strong></td>
+		</tr>
+		<tr>
+			<td><?php echo JText::_('COM_DDC_PURCHASE_ORDER'); ?>:</td>
+			<td style="text-align:right;"><strong><?php echo $this->item->purchase_order; ?></strong></td>
+		</tr>
+	</tbody>
+</table>
+</div>
+<div style="clear:both;"></div>
+<div style="padding-top:15px;">
+	<div class="span4" style="padding:10px;">
+		<h4><?php echo JText::_('COM_DDC_FROM').': '.$app->getCfg('fromname'); ?></h4>
+		<p><?php echo $params->get('address1'); ?><br>
+		<?php echo $params->get('address2'); ?><br>
+		<?php echo $params->get('address3'); ?><br>
+		<?php echo $params->get('address4'); ?><br>
+		<?php echo $params->get('post_code'); ?><br>
+		</p>
+	</div>
+	<div class="span5 pull-right" style="text-align:right;padding:10px;">
+		<h4><?php echo JText::_('COM_DDC_TO').': '.$this->item->contact_name; ?></h4>
+		<p><?php echo $this->item->business_name; ?><br>
+		<?php echo $this->item->address1; ?><br>
+		<?php echo $this->item->address2; ?><br>
+		<?php echo $this->item->town; ?><br>
+		<?php echo $this->item->county; ?><br>
+		<?php echo $this->item->postcode; ?><br>
+		</p>
+	</div>
+	<div style="clear:both;"></div>
+</div><!-- / end client details section -->
+<table style="width:100%;padding-top:10px;border-collapse: collapse;padding:5px;height:400px;">
+<thead>
+	<tr style="text-align:left;height:20px;">
+		<th><h4><?php echo JText::_('COM_DDC_POS');?></h4></th>
+		<th><h4><?php echo JText::_('COM_DDC_DESCRIPTION'); ?></h4></th>
+		<th><h4><?php echo JText::_('COM_DDC_HRS_QTY'); ?></h4></th>
+		<th><h4><?php echo JText::_('COM_DDC_PRICE_RATE'); ?></h4></th>
+		<th style="text-align:right;"><h4><?php echo JText::_('COM_DDC_SUB_TOTAL'); ?></h4></th>
+	</tr>
+</thead>
+<tbody style="border-top:1px solid #ccc;border-bottom:1px solid #ccc;">
+<?php for($i=0;$i<$lines;$i++): ?>
+  	<tr>
+  		<td style="padding:5px;"><?php echo $position[$i]; ?></td>
+  		<td style="padding:5px;"><?php echo $descriptions[$i]; ?></td>
+  		<td style="padding:5px;"><?php echo $quantities[$i]; ?></td>
+  		<td style="padding:5px;"><?php if($costs[$i]!=null){echo '&pound; '.number_format($costs[$i],2);} ?></td>
+  	<td style="padding:5px;text-align:right;text-weight:bold;">
+  	<?php if($costs[$i]!=null):
+  	echo '&pound; '.number_format($total[$i],2);
+  	endif; ?>
+	</td></tr>
+<?php endfor; ?>
+</tbody>
+<tfoot>
+	<tr>
+		<td colspan="3"></td>
+		<td style="font-weight:bold;padding:10px 0px 10px 0px;border-bottom:double #ccc;"><?php echo JText::_('COM_DDC_TOTAL'); ?>: </td>
+		<td style="font-weight:bold; text-align:right;padding:10px 0px 10px 0px;border-bottom:double #ccc;">&pound; <?php echo number_format(array_sum($total),2); ?></td>
+	</tr>
+</tfoot>
+</table>
+<br />
+<br />
+<table style="width:100%;border-collapse: collapse;border:1px solid #eee;">
+	<thead style="line-height:20px;">
+		<tr style=";border:1px solid #eee;">
+			<th colspan="2" style=";border:1px solid #eee;"><h4 style="line-height:20px;margin:3px;"><?php echo JText::_('COM_DDC_BANK_DETAILS'); ?></h4></th>
+			<th colspan="2" style=";border:1px solid #eee;"><h4 style="line-height:20px;margin:3px;"><?php echo JText::_('COM_DDC_CONTACT_DETAILS'); ?></h4></th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td style="width:22%;font-weight:bold;"><?php echo JText::_('COM_DDC_NAME').':'; ?></td>
+			<td style="width:28%;"><?php echo $params->get('bank_account_name'); ?></td>
+			<td style="width:20%;font-weight:bold;"><?php echo JText::_('COM_DDC_EMAIL').':'; ?></td>
+			<td style="width:30%;"><?php echo $app->getCfg('mailfrom'); ?></td>
+		</tr>
+		<tr>
+			<td style="font-weight:bold;"><?php echo JText::_('COM_DDC_BANK_NAME').':'; ?></td>
+			<td><?php echo $params->get('bank_name'); ?></td>
+			<td style="font-weight:bold;"><?php echo JText::_('COM_DDC_TELEPHONE').':'; ?></td>
+			<td><?php echo $params->get('telephone'); ?></td>
+		</tr>
+		<tr>
+			<td style="width:20%;font-weight:bold;"><?php echo JText::_('COM_DDC_ACCOUNT_NAME').':'; ?></td>
+			<td><?php echo $params->get('bank_account_number'); ?></td>
+			<td style="width:20%;font-weight:bold;"><?php echo JText::_('COM_DDC_TWITTER').':'; ?></td>
+			<td><?php echo $params->get('twiiter_name'); ?></td>
+		</tr>
+		<tr>
+			<td style="font-weight:bold;"><?php echo JText::_('COM_DDC_SORT_CODE').':'; ?></td>
+			<td><?php echo $params->get('bank_sort_code'); ?></td>
+			<td></td>
+			<td></td>
+		</tr>
+	</tbody>
+</table>
+<div><?php echo $params->get('payment_terms'); ?></div>
+</div>
