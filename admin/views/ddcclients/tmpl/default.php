@@ -3,6 +3,10 @@
 defined('_JEXEC') or die('Restricted Access');
 // load tooltip behavior
 JHtml::_('behavior.tooltip');
+$params = JComponentHelper::getParams('com_devcloudmanager');
+$workkey = $params->get('item_id');
+$invhrs = new DevcloudmanagerModelsDdcinvoices();
+$tskhrs = new DevcloudmanagerModelsDdcprojects();
 ?>
 <form action="<?php echo JRoute::_('index.php?option=com_devcloudmanager&controller=edit'); ?>" method="post" name="adminForm" id="adminForm">
 <?php if (!empty( $this->sidebar)) : ?>
@@ -18,8 +22,11 @@ JHtml::_('behavior.tooltip');
                 	<tr>
                 		<th width="5%"><?php echo JText::_('COM_DDC_STATUS'); ?></th>
         				<th width="5%"><?php echo JText::_('COM_DDC_ID'); ?></th>
-						<th width="55%" style="text-align:left;"><?php echo JText::_('COM_DDC_BUSINESS_NAME'); ?></th>
-						<th width="35%" style="text-align:left;"><?php echo JText::_('COM_DDC_NO_OF_PROJECTS'); ?></th>
+						<th style="text-align:left;"><?php echo JText::_('COM_DDC_BUSINESS_NAME'); ?></th>
+						<th style="text-align:left;"><?php echo JText::_('COM_DDC_NO_OF_PROJECTS'); ?></th>
+						<th style="text-align:left;"><?php echo JText::_('COM_DDC_TIME_BOUGHT'); ?></th>
+						<th style="text-align:left;"><?php echo JText::_('COM_DDC_TIME_SPENT'); ?></th>
+						<th style="text-align:left;"><?php echo JText::_('COM_DDC_BALANCE'); ?></th>
 					</tr>
                 </thead>
                 <tfoot>
@@ -27,6 +34,8 @@ JHtml::_('behavior.tooltip');
                 </tfoot>
                 <tbody>
                 <?php foreach($this->items as $i => $item): ?>
+                <?php $timebought = $invhrs->getHours($item->ddc_client_id);?>
+                <?php $timespent = $tskhrs->getTaskHours($item->ddc_client_id);?>
         			<tr class="row<?php echo $i % 2; ?>">
                 		<td>
         					<?php echo JHtml::_('jgrid.published', $item->state, 'ddc_clients'); ?>
@@ -39,6 +48,15 @@ JHtml::_('behavior.tooltip');
                 		</td>
                 		<td style="text-align: center;">
                 	        <?php echo $item->no_of_projects; ?>
+                		</td>
+                		<td style="text-align: center;">
+                	        <?php echo number_format($timebought->hours,2); ?>
+                		</td>
+                		<td style="text-align: center;">
+                	        <?php echo number_format($timespent->hours,2); ?>
+                		</td>
+                		<td style="text-align: center;">
+                	        <?php echo number_format($timebought->hours-$timespent->hours,2); ?>
                 		</td>
         			</tr>
 				<?php endforeach; ?>

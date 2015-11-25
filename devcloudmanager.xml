@@ -7,7 +7,7 @@
 	<authorUrl>http://www.digidevcloud.co.uk</authorUrl>
 	<copyright>Copyright Info</copyright>
 	<license>License Info</license>
-	<version>0.0.6</version>
+	<version>0.0.13</version>
 	<description>COM_DEVCLOUDMANAGER_DESCRIPTION</description>
 
 	<install>
@@ -18,13 +18,14 @@
         </install>
 
         <!-- SQL query files to execute on uninstallation -->
+        <!--
         <uninstall>
                 <sql>
                         <file driver="mysql" charset="utf8">sql/install/mysql/uninstall.sql</file>
                         <file driver="mysql">sql/install/mysql/uninstall.sql</file>
                 </sql>
         </uninstall>
-        
+        -->
         <!-- SQL files to run on update -->
         <update>
             <sql>

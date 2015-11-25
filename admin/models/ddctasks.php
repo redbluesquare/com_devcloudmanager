@@ -19,10 +19,11 @@ class DevcloudmanagerModelsDdctasks extends DevcloudmanagerModelsDefault
   function __construct()
   {
   	$app = JFactory::getApplication();
+  	$this->session = JFactory::getSession();
 	$this->_ddctask_id = $app->input->get('ddctask_id', null);
 	$this->_query = $app->input->get('query', null);
 	$this->_cat_id = $app->input->get('id', null);
-	$this->_project_id = $app->input->get('project_id', null);
+	$this->_project_id = $this->session->get('ddcproject', null);
   	  	
     parent::__construct();       
   }

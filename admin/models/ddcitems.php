@@ -48,6 +48,10 @@ class DevcloudmanagerModelsDdcitems extends DevcloudmanagerModelsDefault
   	{
   		$query->where('i.state = "'.$this->_published.'"');
   	}
+  	if($this->_ddcitem_id!=null)
+  	{
+  		$query->where('i.ddc_item_id = "'.$this->_ddcitem_id.'"');
+  	}
 
    return $query;
   }

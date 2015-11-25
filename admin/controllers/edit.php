@@ -12,6 +12,7 @@ Class DevcloudmanagerControllersEdit extends DevcloudmanagerControllersDefault
 	
 	public function execute() {
 	
+		$session = JFactory::getSession();
 		$app = JFactory::getApplication ();
 		$return = array ("success" => false	);
 		$this->data = $app->input->get('jform', array(),'array');
@@ -40,7 +41,7 @@ Class DevcloudmanagerControllersEdit extends DevcloudmanagerControllersDefault
 						$invdmodel = new DevcloudmanagerModelsDdcinvoicedetails();
 						$invdmodel->storeDetails($row->ddc_invoice_header_id);
 						if($this->data['sendmail']==1):
-							$sent = $this->_sendEmail($row->ddc_invoice_header_id);
+							$sent = $this->_sendEmail($row->ddc_invoice_header_id, $this->data['allowpaypal']);
 						endif;
 					endif;
 					if($this->data['table'] == 'ddctaskdetail')
@@ -102,6 +103,24 @@ Class DevcloudmanagerControllersEdit extends DevcloudmanagerControllersDefault
 				//display view
 				return parent::execute();
 			}
+			if($this->data['ddcfilter']=='update')
+			{
+				if($this->data['ddcproject']!=null)
+				{
+					$session->set('ddcproject',$this->data['ddcproject']);
+				}
+				else 
+				{
+					$session->clear('ddcproject');
+				}
+				
+				$modelName  = $app->input->get('models', $this->data['table'].'s');
+				$viewName = $app->input->getWord('view', $this->data['table']);
+				$app->input->set('layout','default');
+				$app->input->set('view', $viewName);
+				//display view
+				return parent::execute();
+			}
 			
 		}
 		else
@@ -115,11 +134,11 @@ Class DevcloudmanagerControllersEdit extends DevcloudmanagerControllersDefault
 	
 	}
 	
-	private function _sendEmail($id)
+	private function _sendEmail($id, $allowpaypal = false)
 	{
 		//save the new booking and send to customer
 		$model = new DevcloudmanagerModelsDdcinvoices();
-		$inv = $model->emailinvoice($id);
+		$inv = $model->emailinvoice($id, $allowpaypal);
 		$params = JComponentHelper::getParams('com_devcloudmanager');
 	
 		$app = JFactory::getApplication();

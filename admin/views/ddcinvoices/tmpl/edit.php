@@ -77,7 +77,7 @@ $pos = null;
 										<td><?php echo $itemd->quantity; ?></td>
 										<td><?php echo $itemd->cost; ?></td>
 										<td><?php echo ($itemd->discount*100)." %"; ?></td>
-										<td><?php echo $itemd->total; ?></td>
+										<td><?php echo number_format($itemd->total,2); ?></td>
 										<td><div class="btn btn-danger btn-small" onclick="delinvd(<?php echo $itemd->ddc_invoice_detail_id; ?>)"><i class="icon-remove"></i></div></td>
 										</tr>
 									<?php endforeach; ?>

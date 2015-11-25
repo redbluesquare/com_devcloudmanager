@@ -44,7 +44,7 @@ class DevcloudmanagerViewsDdcinvoicesHtml extends JViewHtml
   	// Get the toolbar object instance
   	$bar = JToolBar::getInstance('toolbar');
   
-  	JToolBarHelper::title(JText::_('COM_DDC_CLIENTS'));
+  	JToolBarHelper::title(JText::_('COM_DDC_INVOICES'));
   	JToolBarHelper::addNew('ddcinvoice.add');
   	
   	JToolBarHelper::help('JHELP_DEVCLOUDMANAGER',true,'http://redbluesquare.co.uk/custom-joomla-components/24-devcloudmanager.html');

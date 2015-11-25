@@ -42,7 +42,7 @@ class DevcloudmanagerModelsDdcinvoices extends DevcloudmanagerModelsDefault
 	$this->_ddcinvh_id = $this->_app->input->get('ddcinvh_id', null);
 	$this->_query = $this->_app->input->get('query', null);
 	$this->_cat_id = $this->_app->input->get('id', null);
-	$this->_token = $this->_app->input->get('token',null);
+	$this->_token = $this->_session->get('invoice_token',null);
 	
   	  	
     parent::__construct();       
@@ -235,15 +235,18 @@ class DevcloudmanagerModelsDdcinvoices extends DevcloudmanagerModelsDefault
   	$payment = new Payment();
   	$redirecturls = new RedirectUrls();
   	
-  	if($this->_token!=$paymentDetails['token'])
+  	if($this->_token != $this->_app->input->get('token'))
   	{
   		if(($this->_app->input->get('paypalpayment',null)==null) || ($this->_app->input->get('paymentId',null)==null) || ($this->_app->input->get('PayerID',null)==null))
   		{
-  			$this->_app->redirect(JUri::root());
+  			//$this->_app->redirect(JUri::root());
+  			$exit1 = "paypalpayment, paymentId and PayerID did not validate";
+  			return $exit1;
   		}
   		if($this->_app->input->get('paypalpayment',null)===false)
   		{
-  			$this->_app->redirect(JUri::root());
+  			$exit2 = "paypalpayment was false, therefore customer cancelled";
+  			return $exit2;
   		}
   		$paymentId = $this->_app->input->get('paymentId',null);
   		$PayerID = $this->_app->input->get('PayerID',null);
@@ -260,7 +263,7 @@ class DevcloudmanagerModelsDdcinvoices extends DevcloudmanagerModelsDefault
   		$db->setQuery($query);
   		$payitem = $db->loadObject();
   		
-  		if(($payitem->ref!='ddc_invoices') And ($payitem->ref_id!=$this->_session->get('invoice_id',null)))
+  		if(($payitem->ref=='ddc_invoices') || ($payitem->ref_id!=$this->_session->get('invoice_id',null)))
   		{
   			$db = JFactory::getDBO();
   			$query = $db->getQuery(TRUE);
@@ -272,6 +275,8 @@ class DevcloudmanagerModelsDdcinvoices extends DevcloudmanagerModelsDefault
   			->values(implode(',', $values));
   			$db->setQuery($query);
   			$db->execute();
+  			
+  			
   		}
   		
   		
@@ -287,11 +292,11 @@ class DevcloudmanagerModelsDdcinvoices extends DevcloudmanagerModelsDefault
   		{
 	   		if (count($e)) 
 			{
-				JError::raiseError(500, implode('<br />', $e->getMessage()));
+				JError::raiseError(500, implode('<br />', 'Error1 '.$e->getMessage()));
 				return false;
 			}
   		}
-  		echo "Thank you, your payment is complete.";
+  		
   		$db = JFactory::getDBO();
   		$query = $db->getQuery(TRUE);
   		// Fields to update.
@@ -305,17 +310,31 @@ class DevcloudmanagerModelsDdcinvoices extends DevcloudmanagerModelsDefault
   		$query->update($db->quoteName('#__ddc_payments'))->set($fields)->where($conditions);
   		$db->setQuery($query);
   		$result = $db->execute();
+  		
+  		$db = JFactory::getDBO();
+  		$query = $db->getQuery(TRUE);
+  		// Fields to update.
+  		$fields = array($db->quoteName('state') . ' = 2',$db->quoteName('closeddate'). ' = '.$db->quote($date));
+  		
+  		// Conditions for which records should be updated.
+  		$conditions = array(
+  				$db->quoteName('ddc_invoice_header_id') . ' = '.$this->_session->get('invoice_id',null)
+  			);
+  		$query->update($db->quoteName('#__ddc_invoice_headers'))->set($fields)->where($conditions);
+  		$db->setQuery($query);
+  		$result = $db->execute();
+  		echo "Thank you, your payment is complete.";
+  		echo '<a href="'.JUri::root().'">Click here</a> to return to the homepage.';
   		$this->_session->clear('invoice_id');
+  		$this->_session->clear('invoice_token');
   	}
   	else 
   	{
   	
 	  	$id = $paymentDetails['id'];
-	  	$shipping = $paymentDetails['shipping'];
 	  	$descriptions = array();
 	  	$quantities = array();
 	  	$costs = array();
-	  	
 	  	for($i=0;$i<count($paymentDetails['details']);$i++)
 	  	{
 	  		array_push($descriptions, $paymentDetails['details'][$i]['description']);
@@ -342,12 +361,11 @@ class DevcloudmanagerModelsDdcinvoices extends DevcloudmanagerModelsDefault
 	  	$itemList->setItems($items);
 	  	
 	  	$details = new Details();
-	  	$details->setShipping(number_format($shipping,2));
 	  	$details->setSubtotal(number_format($subtotal,2));
 	
 	  	
 	  	$amount = new Amount();
-	  	$amount->setTotal(($subtotal+number_format($shipping,2)))
+	  	$amount->setTotal($subtotal)
 	  		->setCurrency($currency)
 	  		->setDetails($details);
 	
@@ -373,11 +391,11 @@ class DevcloudmanagerModelsDdcinvoices extends DevcloudmanagerModelsDefault
 		{
 			if (count($e)) 
 			{
-				JError::raiseError(500, implode('<br />', $e->getMessage()));
+
+				JError::raiseError(500, implode('<br />', 'Error2 '.$e->getMessage()));
 				return false;
 			}
 
-			//die($e);
 		}
 		
 		$approvalUrl = $payment->getApprovalLink();

@@ -10,6 +10,9 @@ class DevcloudmanagerViewsDashboardHtml extends JViewHtml
   function render()
   {
     $layout = $this->getLayout();
+    DevcloudmanagerHelpersDevcloudmanager::addSubmenu('dashboard');
+    $modelClients = new DevcloudmanagerModelsDdcclients();
+    $modelProjects = new DevcloudmanagerModelsDdcprojects();
     
  
     switch($layout) {
@@ -17,6 +20,9 @@ class DevcloudmanagerViewsDashboardHtml extends JViewHtml
      	case "default":
      		default:
 			$this->addToolbar();
+			$this->sidebar = JHtmlSidebar::render();
+			$this->clients = $modelClients->listItems();
+			$this->projects = $modelProjects->listItems();
     	break;
     }
    

@@ -25,7 +25,6 @@ CREATE TABLE IF NOT EXISTS `#__ddc_client_users` (
   `ddc_client_user_id` int(11) NOT NULL AUTO_INCREMENT,
   `client_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
-  `primary` int(3) NOT NULL default '0',
   `created_by` int(11) NOT NULL,
   `created` DATETIME NOT NULL default '0000-00-00 00:00:00',
   `modified_by` int(11) NOT NULL,

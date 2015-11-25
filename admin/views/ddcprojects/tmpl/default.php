@@ -4,7 +4,6 @@ defined('_JEXEC') or die('Restricted Access');
 // load tooltip behavior
 JHtml::_('behavior.tooltip');
 ?>
-<form action="<?php echo JRoute::_('index.php?option=com_devcloudmanager&controller=edit'); ?>" method="post" name="adminForm" id="adminForm">
 <?php if (!empty( $this->sidebar)) : ?>
 	<div id="j-sidebar-container" class="span2">
 		<?php echo $this->sidebar; ?>
@@ -13,13 +12,17 @@ JHtml::_('behavior.tooltip');
 <?php else : ?>
 	<div id="j-main-container">
 <?php endif;?>
+		<form action="<?php echo JRoute::_('index.php?option=com_devcloudmanager&controller=edit'); ?>" method="post" name="adminForm" id="adminForm">
 		<table class="adminlist table table-striped">
                 <thead>
                 	<tr>
                 		<th width="5%"><?php echo JText::_('COM_DDC_STATUS'); ?></th>
         				<th width="5%"><?php echo JText::_('COM_DDC_ID'); ?></th>
-						<th width="55%" style="text-align:left;"><?php echo JText::_('COM_DDC_PROJECT_TITLE'); ?></th>
-						<th width="35%" style="text-align:left;"><?php echo JText::_('COM_DDC_CLIENT'); ?></th>
+						<th style="text-align:left;"><?php echo JText::_('COM_DDC_PROJECT_TITLE'); ?></th>
+						<th style="text-align:left;"><?php echo JText::_('COM_DDC_CLIENT'); ?></th>
+						<th style="text-align:left;"><?php echo JText::_('COM_DDC_ACTUAL_START_DATE'); ?></th>
+						<th style="text-align:left;"><?php echo JText::_('COM_DDC_ACTUAL_END_DATE'); ?></th>
+						<th style="text-align:left;"><?php echo JText::_('COM_DDC_TASKS'); ?></th>
 					</tr>
                 </thead>
                 <tfoot>
@@ -40,6 +43,15 @@ JHtml::_('behavior.tooltip');
                 		<td>
                 	        <?php echo $item->business_name; ?>
                 		</td>
+                		<td>
+                	        <?php if($item->pl_enddate!='0000-00-00 00:00:00'){echo JHtml::date($item->pl_enddate,"d M Y");} ?>
+                		</td>
+                		<td>
+                	        <?php if($item->act_enddate!='0000-00-00 00:00:00'){echo JHtml::date($item->act_enddate,"d M Y");} ?>
+                		</td>
+                		<td>
+                	        <?php echo $item->tasks; ?>
+                		</td>
         			</tr>
 				<?php endforeach; ?>
                 </tbody>
@@ -50,5 +62,5 @@ JHtml::_('behavior.tooltip');
                 <input type="hidden" name="boxchecked" value="0" />
                 <?php echo JHtml::_('form.token'); ?>
         </div>
+        </form>
 	</div>
-</form>

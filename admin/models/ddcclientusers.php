@@ -52,6 +52,10 @@ class DevcloudmanagerModelsDdcclientusers extends DevcloudmanagerModelsDefault
   	{
   		$query->where('cl.ddc_client_id = "'.$this->_client_id.'"');
   	}
+  	if($this->_client_user_id!=null)
+  	{
+  		$query->where('cu.ddc_client_user_id = "'.$this->_client_user_id.'"');
+  	}
    return $query;
   }
 

@@ -56,11 +56,11 @@
 			default="1"
 		>
 			<option value="1">
-				JPUBLISHED</option>
+				COM_DDC_OPEN</option>
 			<option value="0">
-				JUNPUBLISHED</option>
+				COM_DDC_CANCELLED</option>
 			<option value="2">
-				JARCHIVED</option>
+				COM_DDC_COMPLETE</option>
 			<option value="-2">
 				JTRASHED</option>
 		</field>
@@ -78,6 +78,21 @@
 				COM_DDC_SEND_ON_SAVE</option>
 			<option value="0">
 				COM_DDC_DO_NOT_SEND_ON_SAVE</option>
+		</field>
+		<field
+		    name="allowpaypal"
+		    type="list"
+		    label="COM_DDC_ALLOW_PAYPAL"
+			description="COM_DDC_ALLOW_PAYPAL_DESC"
+			class="chzn-color-state"
+			filter="intval"
+			size="1"
+			default="0"
+		>
+			<option value="1">
+				COM_DDC_YES</option>
+			<option value="0">
+				COM_DDC_NO</option>
 		</field>
 		<field
 			name="table"

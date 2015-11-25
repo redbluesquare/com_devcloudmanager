@@ -24,7 +24,8 @@ class DevcloudmanagerModelsDdcinvoices extends DevcloudmanagerModelsDefault
   var $_cat_id		    = null;
   var $_pagination  	= null;
   var $_project_id  	= null;
-  var $_published   	= 0;
+  var $_open   			= 1;
+  var $_complete		= 2;
   var $_session			= null;
   var $_params			= null;
   var $_app				= null;
@@ -54,7 +55,7 @@ class DevcloudmanagerModelsDdcinvoices extends DevcloudmanagerModelsDefault
     $query->select('c.*');
     $query->select('invh.*');
     $query->select('cd.name as contact_name');
-    $query->select('SUM(invd.cost * invd.quantity) as total');
+    $query->select('SUM(invd.cost * invd.quantity * (1-invd.discount)) as total');
     $query->from('#__ddc_invoice_headers as invh');
     $query->leftJoin('#__ddc_clients as c on c.ddc_client_id = invh.client_id');
     $query->leftJoin('#__ddc_client_users as cu on c.ddc_client_id = cu.client_id');
@@ -81,7 +82,24 @@ class DevcloudmanagerModelsDdcinvoices extends DevcloudmanagerModelsDefault
    return $query;
   }
   
-  public function emailinvoice($id)
+  public function getHours($client_id = null)
+  {
+  	
+  	$db = JFactory::getDBO();
+    $query = $db->getQuery(TRUE);
+    $query->select('SUM(invd.quantity) as hours');
+    $query->from('#__ddc_invoice_headers as invh');
+    $query->leftJoin('#__ddc_invoice_details as invd on invd.invoiceheader_id = invh.ddc_invoice_header_id');
+    $query->where('invh.client_id = '.$client_id);
+    $query->where('invd.item_id = '.$this->_params->get('ddc_item_id'));
+    $query->where('invh.closeddate <> "0000-00-00 00:00:00"');
+    $query->where('(invh.state = '.$this->_complete.')');
+  	$db->setQuery($query);
+  	$item = $db->loadObject();
+  	return $item;
+  }
+  
+  public function emailinvoice($id, $allowpaypal)
   {
   	$app = JFactory::getApplication();
   	$invoiceModel = new DevcloudmanagerModelsDdcinvoices();
@@ -108,6 +126,7 @@ class DevcloudmanagerModelsDdcinvoices extends DevcloudmanagerModelsDefault
   	$telephone_title = "Telephone";
   	$bank_name_title = "Bank Name";
   	$account_number_title = "Account Number";
+  	$sort_code_title = "Sort Code";
   	$twitter_title = "Twitter";
   	$invoicenumber = (int)$invoice->ddc_invoice_header_id;
   	$token = (string)$invoice->token;
@@ -132,6 +151,16 @@ class DevcloudmanagerModelsDdcinvoices extends DevcloudmanagerModelsDefault
   	$lines=10;
   	$hosturl = (string)$siteurl.'index.php?option=com_devcloudmanager&view=ddcinvoices&ddcinvh_id='.$invoicenumber.'&token='.$token;
   	$paypallogo = $params->get('paypal_logo');
+
+  	if( $allowpaypal == 1 ) 
+  	{
+  		$paypallink = '<a href="'.$hosturl.'" rel="nofollow"><img src="'.$paypallogo.'" height="80px" /></a>';
+  	}
+  	else 
+  	{
+  		$paypallink = "";
+  	}
+  	
   	$position = array();
   	$description = array();
   	$qty = array();
@@ -163,7 +192,7 @@ class DevcloudmanagerModelsDdcinvoices extends DevcloudmanagerModelsDefault
   	$accountname = $params->get('bank_account_name');
   	$bankname = $params->get('bank_name');
   	$accountnumber = $params->get('bank_account_number');
-  	$sortcode = $params->get('sort_code');
+  	$sortcode = $params->get('bank_sort_code');
   	$paymentterms = $params->get('payment_terms');
   	
   	$string = '<div style="width:720px;font-family: arial, \'Bree Serif\', serif;padding:20px;border:1px solid #ccc;margin:auto">';
@@ -196,7 +225,7 @@ class DevcloudmanagerModelsDdcinvoices extends DevcloudmanagerModelsDefault
   	endif;
   	$string .= '</td></tr>';
   	endfor;
-  	$string .= '</tbody><tfoot><tr><td colspan="2" rowspan="2"></td><td><a href="'.$hosturl.'" rel="nofollow"><img src="'.$paypallogo.'" height="80px" /></a></td><td style="font-weight:bold;padding:10px 0px 10px 0px;border-bottom:double #ccc;">'.$total_title.': </td><td style="font-weight:bold; text-align:right;padding:10px 0px 10px 0px;border-bottom:double #ccc;">&pound; '.number_format(array_sum($total),2).'</td></tr><tr><td></td><td></td><td></td><td></td></tr></tfoot></table><br /><br /><table style="width:100%;border-collapse: collapse;border:1px solid #eee;"><thead style="line-height:20px;"><tr style=";border:1px solid #eee;"><th colspan="2" style=";border:1px solid #eee;"><h4 style="line-height:20px;margin:3px;">'.$bank_details_title.'</h4></th><th colspan="2" style=";border:1px solid #eee;"><h4 style="line-height:20px;margin:3px;">'.$contact_details_title.'</h4></th></tr></thead><tbody><tr><td style="width:22%;font-weight:bold;">'.$name_title.':</td><td style="width:28%;">'.$accountname.'</td><td style="width:20%;font-weight:bold;">'.$email_title.':</td><td style="width:30%;">'.$owneremail.'</td></tr><tr><td style="font-weight:bold;">'.$bank_name_title.':</td><td>'.$bankname.'</td><td style="font-weight:bold;">'.$telephone_title.':</td><td>'.$ownertelephone.'</td></tr><tr><td style="width:20%;font-weight:bold;">'.$account_number_title.':</td><td>'.$accountnumber.'</td><td style="width:20%;font-weight:bold;">'.$twitter_title.':</td><td>'.$ownertwitter.'</td></tr><tr><td style="font-weight:bold;"><?php echo "Sort Code:"; ?></td><td>'.$sortcode.'</td><td></td><td></td></tr></tbody></table><div>'.$paymentterms.'</div></div>';
+  	$string .= '</tbody><tfoot><tr><td colspan="2" rowspan="2"></td><td>'.$paypallink.'</td><td style="font-weight:bold;padding:10px 0px 10px 0px;border-bottom:double #ccc;">'.$total_title.': </td><td style="font-weight:bold; text-align:right;padding:10px 0px 10px 0px;border-bottom:double #ccc;">&pound; '.number_format(array_sum($total),2).'</td></tr><tr><td></td><td></td><td></td><td></td></tr></tfoot></table><br /><br /><table style="width:100%;border-collapse: collapse;border:1px solid #eee;"><thead style="line-height:20px;"><tr style=";border:1px solid #eee;"><th colspan="2" style=";border:1px solid #eee;"><h4 style="line-height:20px;margin:3px;">'.$bank_details_title.'</h4></th><th colspan="2" style=";border:1px solid #eee;"><h4 style="line-height:20px;margin:3px;">'.$contact_details_title.'</h4></th></tr></thead><tbody><tr><td style="width:22%;font-weight:bold;">'.$name_title.':</td><td style="width:28%;">'.$accountname.'</td><td style="width:20%;font-weight:bold;">'.$email_title.':</td><td style="width:30%;">'.$owneremail.'</td></tr><tr><td style="font-weight:bold;">'.$bank_name_title.':</td><td>'.$bankname.'</td><td style="font-weight:bold;">'.$telephone_title.':</td><td>'.$ownertelephone.'</td></tr><tr><td style="width:20%;font-weight:bold;">'.$account_number_title.':</td><td>'.$accountnumber.'</td><td style="width:20%;font-weight:bold;">'.$twitter_title.':</td><td>'.$ownertwitter.'</td></tr><tr><td style="font-weight:bold;">'.$sort_code_title.'</td><td>'.$sortcode.'</td><td></td><td></td></tr></tbody></table><div>'.$paymentterms.'</div></div>';
   	
   	return array($string,$invoice->contact_name,$invoice->email_to, $invoicetitle.": ".$invoicenumber);
   }
