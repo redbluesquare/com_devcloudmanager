@@ -25,6 +25,11 @@ class DevcloudmanagerViewsDdcinvoicesHtml extends JViewHtml
      			$this->invd = $modelInvDetails->listItems();
      		
     	break;
+    	case "complete":
+    		$this->item = $this->model->getItem();
+    		$this->invd = $modelInvDetails->listItems();
+    		 
+    	break;
     	
     }
    

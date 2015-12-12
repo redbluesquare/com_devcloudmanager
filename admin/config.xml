@@ -136,6 +136,16 @@
 		    label="COM_DDC_PAYPAL_CLIENT_SECRET"
 		    description="COM_DDC_PAYPAL_CLIENT_SECRET_DESC"
 		/>
+		<field name="paypal_clientid_sandbox"
+		    type="text"
+		    label="COM_DDC_PAYPAL_SANDBOX_CLIENT_ID"
+		    description="COM_DDC_PAYPAL_SANDBOX_CLIENT_ID_DESC"
+		/>
+		<field name="paypal_client_secret_sandbox"
+		    type="text"
+		    label="COM_DDC_PAYPAL_SANDBOX_CLIENT_SECRET"
+		    description="COM_DDC_PAYPAL_SANDBOX_CLIENT_SECRET_DESC"
+		/>
 		<field name="paypal_mode" type="radio"
 			default="sandbox"
 			class="btn-group"
@@ -167,6 +177,24 @@
 		    type="url"
 			default=""
 			label="COM_DDC_PAYPAL_CANCEL_URL"
+			description="COM_DDC_PAYPAL_URL_DESC"
+		/>
+		<field name="paypalurl_sandbox"
+		    type="url"
+			default="https://api.sandbox.paypal.com"
+			label="COM_DDC_PAYPAL_URL"
+			description="COM_DDC_PAYPAL_URL_DESC"
+		/>
+		<field name="paypal_success_url_sandbox"
+		    type="url"
+			default=""
+			label="COM_DDC_PAYPAL_SANDBOX_SUCCESS_URL"
+			description="COM_DDC_PAYPAL_URL_DESC"
+		/>
+		<field name="paypal_cancel_url_sandbox"
+		    type="url"
+			default=""
+			label="COM_DDC_PAYPAL_SANDBOX_CANCEL_URL"
 			description="COM_DDC_PAYPAL_URL_DESC"
 		/>
 	</fieldset>

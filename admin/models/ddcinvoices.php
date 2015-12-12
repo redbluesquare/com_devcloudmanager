@@ -54,11 +54,11 @@ class DevcloudmanagerModelsDdcinvoices extends DevcloudmanagerModelsDefault
     $query->select('cd.*');
     $query->select('c.*');
     $query->select('invh.*');
-    $query->select('cd.name as contact_name');
+    $query->select('MIN(cd.name) as contact_name');
     $query->select('SUM(invd.cost * invd.quantity * (1-invd.discount)) as total');
     $query->from('#__ddc_invoice_headers as invh');
     $query->leftJoin('#__ddc_clients as c on c.ddc_client_id = invh.client_id');
-    $query->leftJoin('#__ddc_client_users as cu on c.ddc_client_id = cu.client_id');
+    $query->leftJoin('#__ddc_client_users as cu on ((c.ddc_client_id = cu.client_id) AND (cu.primary = "1"))');
     $query->leftJoin('#__contact_details as cd on cd.id = cu.user_id');
     $query->leftJoin('#__ddc_invoice_details as invd on invd.invoiceheader_id = invh.ddc_invoice_header_id');
     $query->group('invh.ddc_invoice_header_id, invh.posteddate ASC');
@@ -149,7 +149,7 @@ class DevcloudmanagerModelsDdcinvoices extends DevcloudmanagerModelsDefault
   	$clientaddress4 = (string)$invoice->county;
   	$clientpostcode = (string)$invoice->postcode;
   	$lines=10;
-  	$hosturl = (string)$siteurl.'index.php?option=com_devcloudmanager&view=ddcinvoices&ddcinvh_id='.$invoicenumber.'&token='.$token;
+  	$hosturl = (string)$siteurl.'index.php?option=com_devcloudmanager&view=ddcinvoices&ddcinvh_id='.$invoicenumber.'&invtoken='.$token;
   	$paypallogo = $params->get('paypal_logo');
 
   	if( $allowpaypal == 1 ) 
