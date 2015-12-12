@@ -40,15 +40,15 @@ JHtml::_('behavior.tooltip');
         			}
         			if(($i==0) And ($item->state==0))
         			{
-        				$status = JText::_('JUNPUBLISHED');
+        				$status = JText::_('COM_DDC_NOT_ACTIVE');
         			}
         			if(($i==1) And ($item->state==1))
         			{
-        				$status = JText::_('COM_DDC_IN_PROGRESS');
+        				$status = JText::_('COM_DDC_ACTIVE');
         			}
         			if(($i==2) And ($item->state==2))
         			{
-        				$status = JText::_('COM_DDC_COMPLETE');
+        				$status = JText::_('COM_DDC_ENDED');
         			}
         		}
         		?>

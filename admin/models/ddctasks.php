@@ -44,10 +44,7 @@ class DevcloudmanagerModelsDdctasks extends DevcloudmanagerModelsDefault
     $query->select('u.name as responsible,u.email as responsible_email');
     $query->leftJoin('#__users as u on t.user_id = u.id');
     $query->group('t.title ASC, t.ddc_task_id');
-    if($this->_project_id==null)
-    {
-    	$query->where('p.state = "1"');
-    }
+
     
     
     return $query;
